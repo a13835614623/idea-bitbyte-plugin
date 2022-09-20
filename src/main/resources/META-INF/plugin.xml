@@ -5,15 +5,15 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>JsonSchema</name>
+    <name>Idea-Json-Schema</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="zhangzikuan4513@foxmail.com" url="https://www.yourcompany.com">zzk</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>复制JsonSchema</description>
+    <description>复制JsonSchema,复制JsonSchema,复制JsonSchema,复制JsonSchema</description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -25,4 +25,10 @@
     <extensions defaultExtensionNs="com.intellij">
 
     </extensions>
+    <actions>
+        <action id="CopyJsonSchema" class="com.zzk.idea.CopyJsonSchema" text="Copy Json Schema" description="复制 Json Schema">
+            <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
+        </action>
+    </actions>
 </idea-plugin>

@@ -9,11 +9,13 @@ group = "com.zzk"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    mavenCentral()
+    maven {
+        setUrl("https://maven.aliyun.com/repository/public")
+    }
 }
 
 dependencies{
-    implementation("org.projectlombok:lombok:1.18.24")
+    implementation("com.alibaba:fastjson:2.0.13.graal")
 }
 
 // Configure Gradle IntelliJ Plugin

@@ -1,4 +1,4 @@
-package com.zzk.maxcv;
+package com.zzk.idea;
 /**
  * JsonSchemaUtil
  * @author 张子宽
