@@ -1,6 +1,8 @@
 package com.zzk.idea.jsonschema;
 
 
+import com.alibaba.fastjson.JSON;
+
 /**
  * Property
  * @author 张子宽
@@ -36,9 +38,6 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property{" +
-                "name='" + name + '\'' +
-                ", schema=" + schema +
-                '}';
+        return JSON.toJSONString(this);
     }
 }

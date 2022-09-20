@@ -1,5 +1,7 @@
-package com.zzk.idea;
+package com.zzk.idea.jsonschema;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -12,7 +14,7 @@ import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.zzk.idea.jsonschema.Schema;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapter;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapterFactory;
-import com.zzk.idea.jsonschema.adapter.PsiClassSchemaAdapter;
+import com.zzk.idea.jsonschema.util.Util;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.datatransfer.StringSelection;
@@ -29,27 +31,26 @@ public class CopyJsonSchema extends AnAction {
     public void actionPerformed(@NotNull AnActionEvent e) {
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getName().endsWith(".java")) {
-            CopyPasteManager.getInstance().setContents(new StringSelection(getJsonSchema(e.getProject(),file)));
+            String jsonSchema = getJsonSchema(e.getProject(), file);
+            if (jsonSchema != null) {
+                StringSelection content = new StringSelection(jsonSchema);
+                CopyPasteManager.getInstance().setContents(content);
+            }
         }
     }
 
     private String getJsonSchema(Project project, VirtualFile file) {
-        try {
-            JsonSchemaAdapter<PsiClass> psiClassSchemaAdapter = JsonSchemaAdapterFactory.get(PsiClass.class);
-            PsiFile psiFile = Util.psiFile(project, file);
-            if (psiFile.getFileType()== JavaFileType.INSTANCE) {
-                PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
-                PsiClass[] classes = psiJavaFile.getClasses();
-                for (PsiClass aClass : classes) {
-                    Schema schema = psiClassSchemaAdapter.getSchema(aClass);
-                    System.out.println(schema);
-                }
+        JsonSchemaAdapter<PsiClass> psiClassSchemaAdapter = JsonSchemaAdapterFactory.get(PsiClass.class);
+        PsiFile psiFile = Util.psiFile(project, file);
+        if (psiFile.getFileType()== JavaFileType.INSTANCE) {
+            PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
+            PsiClass[] classes = psiJavaFile.getClasses();
+            for (PsiClass aClass : classes) {
+                Schema schema = psiClassSchemaAdapter.getSchema(aClass);
+                return JSON.toJSONString(WrapJsonSchema.build(schema),
+                        SerializerFeature.WriteEnumUsingToString);
             }
-            System.out.println(psiFile);
-            return new String(file.contentsToByteArray());
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "";
         }
+        return null;
     }
 }

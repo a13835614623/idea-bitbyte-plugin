@@ -26,7 +26,7 @@
 
     </extensions>
     <actions>
-        <action id="CopyJsonSchema" class="com.zzk.idea.CopyJsonSchema" text="Copy Json Schema" description="复制 Json Schema">
+        <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.CopyJsonSchema" text="Copy Json Schema" description="复制 Json Schema">
             <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
         </action>

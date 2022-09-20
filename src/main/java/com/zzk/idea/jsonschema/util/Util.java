@@ -1,5 +1,6 @@
-package com.zzk.idea;
+package com.zzk.idea.jsonschema.util;
 
+import com.alibaba.fastjson.JSON;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;

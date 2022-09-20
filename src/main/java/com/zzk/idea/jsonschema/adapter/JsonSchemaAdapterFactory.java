@@ -11,6 +11,7 @@ public class JsonSchemaAdapterFactory {
     static {
         register(new PsiFieldSchemaAdapter());
         register(new PsiClassSchemaAdapter());
+        register(new PsiTypeSchemaAdapter());
     }
 
     public static <T> JsonSchemaAdapter<T> get(Class<T> tClass) {
