@@ -3,6 +3,7 @@ package com.zzk.idea.jsonschema.adapter;
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiTypesUtil;
+import com.zzk.idea.jsonschema.action.CopyEnumDesc;
 import com.zzk.idea.jsonschema.util.Util;
 import com.zzk.idea.jsonschema.Property;
 import com.zzk.idea.jsonschema.Schema;
@@ -26,7 +27,9 @@ public class PsiClassSchemaAdapter extends BaseJsonSchemaAdapter<PsiClass> {
             if (StringUtils.isEmpty(comment)) {
                 comment = psiClass.getName();
             }
-            return new Schema().setType(SchemaType.STRING).setDescription(comment).setTitle(comment).setProperties(null);
+            String enumDesc = CopyEnumDesc.getEnumDesc(psiClass);
+            return new Schema().setType(SchemaType.STRING).setDescription(enumDesc)
+                    .setTitle(comment).setProperties(null);
         }
         PsiClassType classType = PsiTypesUtil.getClassType(psiClass);
         SchemaType type = SchemaType.parse(classType);

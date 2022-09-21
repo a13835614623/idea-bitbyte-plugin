@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema;
+package com.zzk.idea.jsonschema.action;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -12,9 +12,11 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.zzk.idea.jsonschema.Schema;
+import com.zzk.idea.jsonschema.WrapJsonSchema;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapter;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapterFactory;
 import com.zzk.idea.jsonschema.util.Util;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.datatransfer.StringSelection;
@@ -32,7 +34,7 @@ public class CopyJsonSchema extends AnAction {
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getName().endsWith(".java")) {
             String jsonSchema = getJsonSchema(e.getProject(), file);
-            if (jsonSchema != null) {
+            if (StringUtils.isNoneBlank(jsonSchema)) {
                 StringSelection content = new StringSelection(jsonSchema);
                 CopyPasteManager.getInstance().setContents(content);
             }

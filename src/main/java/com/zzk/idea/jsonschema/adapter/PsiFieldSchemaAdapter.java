@@ -15,7 +15,7 @@ public class PsiFieldSchemaAdapter extends BaseJsonSchemaAdapter<PsiField> {
         PsiDocComment docComment = field.getDocComment();
         String title = Util.getComment(docComment);
         Schema schema = JsonSchemaAdapterFactory.get(PsiType.class).getSchema(type);
-        schema.setTitle(title).setDescription(title);
+        schema.setTitle(title).setDescription(schema.getDescription());
         return schema;
     }
 

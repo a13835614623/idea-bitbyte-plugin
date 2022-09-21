@@ -1,5 +1,7 @@
 package com.zzk.idea.jsonschema.test;
 
+import com.zzk.idea.jsonschema.SchemaType;
+
 import java.util.List;
 
 /**
@@ -43,6 +45,10 @@ public class TestJsonSchema {
      */
     private User[] users;
 
+    /**
+     * 测试枚举
+     */
+    private SchemaType type;
 
     public static class User{
         /**

@@ -4,7 +4,9 @@ package com.zzk.idea.jsonschema;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTypesUtil;
+import org.jetbrains.annotations.Nullable;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +25,7 @@ public enum SchemaType {
      * 类型参数
      */
     STRING("string", "字符串", List.of(String.class)),
-    NUMBER("number", "数字", List.of(Double.class, Long.class, double.class, long.class)),
+    NUMBER("number", "数字", List.of(Double.class, Long.class,BigDecimal.class, double.class, long.class)),
     INTEGER("integer", "整数", List.of(Integer.class, Short.class, Byte.class,
             int.class, short.class, byte.class)),
     OBJECT("object", "对象", List.of()),
@@ -104,10 +106,9 @@ public enum SchemaType {
             return ARRAY;
         }
         if (psiType instanceof PsiPrimitiveType psiPrimitiveType) {
-            for (SchemaType value : values()) {
-                if (value.getClazz().stream().anyMatch(x -> x.getName().equals(psiPrimitiveType.getName()))) {
-                    return value;
-                }
+            SchemaType value1 = parseByClassName(psiPrimitiveType.getCanonicalText());
+            if (value1 != null) {
+                return value1;
             }
             throw new RuntimeException("非法的类型:" + psiPrimitiveType);
         }
@@ -122,13 +123,22 @@ public enum SchemaType {
             if (canonicalText.equals(CommonClassNames.JAVA_LANG_STRING)) {
                 return STRING;
             }
-            for (SchemaType value : values()) {
-                if (value.getClazz().stream().anyMatch(x -> x.getName().equals(canonicalText))) {
-                    return value;
-                }
+            SchemaType value1 = parseByClassName(canonicalText);
+            if (value1 != null) {
+                return value1;
             }
         }
         return OBJECT;
+    }
+
+    @Nullable
+    private static SchemaType parseByClassName(String canonicalText) {
+        for (SchemaType value : values()) {
+            if (value.getClazz().stream().anyMatch(x -> x.getName().equals(canonicalText))) {
+                return value;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
