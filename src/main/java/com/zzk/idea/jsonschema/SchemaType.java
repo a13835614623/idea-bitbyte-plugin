@@ -105,14 +105,16 @@ public enum SchemaType {
         if (psiType instanceof PsiArrayType) {
             return ARRAY;
         }
-        if (psiType instanceof PsiPrimitiveType psiPrimitiveType) {
+        if (psiType instanceof PsiPrimitiveType) {
+            PsiPrimitiveType psiPrimitiveType = ((PsiPrimitiveType) psiType);
             SchemaType value1 = parseByClassName(psiPrimitiveType.getCanonicalText());
             if (value1 != null) {
                 return value1;
             }
             throw new RuntimeException("非法的类型:" + psiPrimitiveType);
         }
-        if (psiType instanceof PsiClassReferenceType psiClassReferenceType) {
+        if (psiType instanceof PsiClassReferenceType) {
+            PsiClassReferenceType psiClassReferenceType = ((PsiClassReferenceType) psiType);
             String canonicalText = psiClassReferenceType.getCanonicalText();
             if (canonicalText.startsWith(CommonClassNames.JAVA_UTIL_COLLECTION)
                     || Arrays.stream(psiClassReferenceType.getSuperTypes())

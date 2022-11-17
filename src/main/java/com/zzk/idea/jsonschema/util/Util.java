@@ -25,7 +25,8 @@ public class Util {
      */
     public static String getComment(PsiDocComment docComment) {
         String comment = "";
-        if (docComment instanceof PsiDocCommentImpl doc) {
+        if (docComment instanceof PsiDocCommentImpl) {
+            PsiDocCommentImpl doc = ((PsiDocCommentImpl) docComment);
             ASTNode node = doc.findChildByType(JavaDocTokenType.DOC_COMMENT_DATA);
             comment = Optional.ofNullable(node).map(ASTNode::getText).map(String::trim).orElse("");
         }

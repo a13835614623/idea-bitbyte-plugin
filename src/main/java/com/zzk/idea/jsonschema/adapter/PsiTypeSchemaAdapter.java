@@ -18,16 +18,19 @@ public class PsiTypeSchemaAdapter extends BaseJsonSchemaAdapter<PsiType> {
         }
         SchemaType type = SchemaType.parse(psiType);
         if (type == SchemaType.ARRAY) {
-            if (psiType instanceof PsiArrayType psiArrayType) {
+            if (psiType instanceof PsiArrayType) {
+                PsiArrayType psiArrayType = ((PsiArrayType) psiType);
                 PsiType componentType = psiArrayType.getComponentType();
                 return new Schema().setType(SchemaType.ARRAY).setItems(getSchema(componentType));
             }
-            if (psiType instanceof PsiClassReferenceType classReferenceType) {
+            if (psiType instanceof PsiClassReferenceType) {
+                PsiClassReferenceType classReferenceType = ((PsiClassReferenceType) psiType);
                 PsiType[] parameters = classReferenceType.getParameters();
                 if (parameters.length == 1) {
                     return new Schema().setType(SchemaType.ARRAY).setItems(getSchema(parameters[0]));
                 }
-                return new Schema().setType(SchemaType.ARRAY).setItems(new Schema()
+                return new Schema().setType(SchemaType.ARRAY)
+                        .setItems(new Schema()
                         .setType(SchemaType.OBJECT)
                         .setProperties(List.of()));
             }
