@@ -1,5 +1,6 @@
 package com.zzk.idea.jsonschema;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -88,8 +89,11 @@ public class WrapJsonSchema {
         wrapJsonSchema.setTitle(schema.getTitle());
         List<Property> schemaProperties = schema.getProperties();
         if (schemaProperties != null) {
-            wrapJsonSchema.setProperties(schemaProperties.stream()
-                    .collect(Collectors.toMap(Property::getName, x -> build(x.getSchema()))));
+            Map<String,WrapJsonSchema> schemaMap = new LinkedHashMap<>(schemaProperties.size());
+            for (Property schemaProperty : schemaProperties) {
+                schemaMap.put(schemaProperty.getName(),build(schemaProperty.getSchema()));
+            }
+            wrapJsonSchema.setProperties(schemaMap);
         }
         wrapJsonSchema.setType(schema.getType());
         return wrapJsonSchema;

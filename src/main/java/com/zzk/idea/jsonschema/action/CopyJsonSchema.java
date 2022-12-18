@@ -49,7 +49,8 @@ public class CopyJsonSchema extends AnAction {
             PsiClass[] classes = psiJavaFile.getClasses();
             for (PsiClass aClass : classes) {
                 Schema schema = psiClassSchemaAdapter.getSchema(aClass);
-                return JSON.toJSONString(WrapJsonSchema.build(schema),
+                WrapJsonSchema jsonSchema = WrapJsonSchema.build(schema);
+                return JSON.toJSONString(jsonSchema,
                         SerializerFeature.WriteEnumUsingToString);
             }
         }
