@@ -23,7 +23,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 
 /**
- * CopyJsonSchema
+ * 复制 json Schema
  * @author 张子宽
  * @date 2022/09/20
  */

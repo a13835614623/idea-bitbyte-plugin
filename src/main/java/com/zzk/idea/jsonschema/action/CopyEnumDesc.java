@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * CopyJsonSchema
+ * 复制枚举的描述
  * @author 张子宽
  * @date 2022/09/20
  */

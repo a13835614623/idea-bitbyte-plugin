@@ -5,16 +5,16 @@
 
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Idea-Json-Schema</name>
+    <name>Copy Json Schema</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="zhangzikuan4513@foxmail.com" url="https://www.yourcompany.com">zzk</vendor>
+    <vendor email="zhangzikuan4513@foxmail.com">zzk</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>复制JsonSchema,复制JsonSchema,复制JsonSchema,复制JsonSchema</description>
-
+    <description>这是一个可以复制当前类的JsonSchema的插件,能够复制类的json schema，还提供了一个复制枚举描述的功能。</description>
+    <version>2022.12.18</version>
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
