@@ -5,9 +5,9 @@ import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.zzk.idea.jsonschema.action.CopyEnumDesc;
 import com.zzk.idea.jsonschema.util.Util;
-import com.zzk.idea.jsonschema.Property;
-import com.zzk.idea.jsonschema.Schema;
-import com.zzk.idea.jsonschema.SchemaType;
+import com.zzk.idea.jsonschema.action.jsonschema.Property;
+import com.zzk.idea.jsonschema.action.jsonschema.Schema;
+import com.zzk.idea.jsonschema.constants.SchemaType;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;

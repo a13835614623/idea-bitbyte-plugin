@@ -1,7 +1,8 @@
-package com.zzk.idea.jsonschema;
+package com.zzk.idea.jsonschema.action.jsonschema;
 
 
 import com.alibaba.fastjson.JSON;
+import com.zzk.idea.jsonschema.constants.SchemaType;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package com.zzk.idea.jsonschema.test;
 
-import com.zzk.idea.jsonschema.SchemaType;
+import com.zzk.idea.jsonschema.constants.SchemaType;
 
 import java.util.List;
 

@@ -1,9 +1,10 @@
-package com.zzk.idea.jsonschema;
+package com.zzk.idea.jsonschema.action.jsonschema;
+
+import com.zzk.idea.jsonschema.constants.SchemaType;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * WrapJsonSchema

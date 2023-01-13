@@ -11,8 +11,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
-import com.zzk.idea.jsonschema.Schema;
-import com.zzk.idea.jsonschema.WrapJsonSchema;
+import com.zzk.idea.jsonschema.action.jsonschema.Schema;
+import com.zzk.idea.jsonschema.action.jsonschema.WrapJsonSchema;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapter;
 import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapterFactory;
 import com.zzk.idea.jsonschema.util.Util;
@@ -20,7 +20,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.datatransfer.StringSelection;
-import java.io.IOException;
 
 /**
  * 复制 json Schema

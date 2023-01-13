@@ -4,7 +4,7 @@ import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.zzk.idea.jsonschema.util.Util;
-import com.zzk.idea.jsonschema.Schema;
+import com.zzk.idea.jsonschema.action.jsonschema.Schema;
 
 public class PsiFieldSchemaAdapter extends BaseJsonSchemaAdapter<PsiField> {
 

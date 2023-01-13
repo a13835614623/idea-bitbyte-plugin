@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema;
+package com.zzk.idea.jsonschema.action.jsonschema;
 
 
 import com.alibaba.fastjson.JSON;

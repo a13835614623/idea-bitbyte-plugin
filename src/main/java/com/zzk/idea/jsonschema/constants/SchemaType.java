@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema;
+package com.zzk.idea.jsonschema.constants;
 
 
 import com.intellij.psi.*;

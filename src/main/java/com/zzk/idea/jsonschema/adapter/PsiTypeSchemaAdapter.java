@@ -3,8 +3,8 @@ package com.zzk.idea.jsonschema.adapter;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTypesUtil;
-import com.zzk.idea.jsonschema.Schema;
-import com.zzk.idea.jsonschema.SchemaType;
+import com.zzk.idea.jsonschema.action.jsonschema.Schema;
+import com.zzk.idea.jsonschema.constants.SchemaType;
 
 import java.util.List;
 

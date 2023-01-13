@@ -9,8 +9,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiEnumConstant;
+import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
+import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
+import com.zzk.idea.jsonschema.settings.AppSettingsState;
 import com.zzk.idea.jsonschema.util.Util;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -21,10 +24,12 @@ import java.util.stream.Stream;
 
 /**
  * 复制枚举的描述
+ *
  * @author 张子宽
  * @date 2022/09/20
  */
 public class CopyEnumDesc extends AnAction {
+
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
@@ -40,7 +45,7 @@ public class CopyEnumDesc extends AnAction {
 
     private String getEnumDesc(Project project, VirtualFile file) {
         PsiFile psiFile = Util.psiFile(project, file);
-        if (psiFile.getFileType()== JavaFileType.INSTANCE) {
+        if (psiFile.getFileType() == JavaFileType.INSTANCE) {
             PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
             PsiClass[] classes = psiJavaFile.getClasses();
             for (PsiClass aClass : classes) {
@@ -54,9 +59,13 @@ public class CopyEnumDesc extends AnAction {
      * 获取枚举描述
      */
     public static String getEnumDesc(PsiClass psiClass) {
+        CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
         return Stream.of(psiClass.getAllFields())
                 .filter(x -> x instanceof PsiEnumConstant)
                 .map(x -> (PsiEnumConstant) x)
-                .map(x -> x.getName() + ":" + Util.getComment(x)).collect(Collectors.joining(","));
+                .map(x -> copyEnumState.getParamTypes().stream()
+                        .map(type -> type.getParam(x))
+                        .collect(Collectors.joining(copyEnumState.getParamSplit())))
+                .collect(Collectors.joining(copyEnumState.getDescSplit()));
     }
 }
