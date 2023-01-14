@@ -5,6 +5,7 @@ import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +40,7 @@ public class AppSettingsConfigurable implements Configurable {
     CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
     boolean modified = !mySettingsComponent.getEnumDescSplit().equals(copyEnumState.getDescSplit());
     modified |= !Objects.equals(mySettingsComponent.getEnumParamSplit(), copyEnumState.getParamSplit());
+    modified |= !Objects.equals(mySettingsComponent.getEnumParamTypes(), copyEnumState.getParamTypes());
     return modified;
   }
 
@@ -47,6 +49,7 @@ public class AppSettingsConfigurable implements Configurable {
     CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
     copyEnumState.setParamSplit(mySettingsComponent.getEnumParamSplit());
     copyEnumState.setDescSplit(mySettingsComponent.getEnumDescSplit());
+    copyEnumState.setParamTypes(mySettingsComponent.getEnumParamTypes());
   }
 
   @Override
@@ -54,6 +57,7 @@ public class AppSettingsConfigurable implements Configurable {
     CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
     mySettingsComponent.setEnumDescSplit(copyEnumState.getDescSplit());
     mySettingsComponent.setEnumParamSplit(copyEnumState.getParamSplit());
+    mySettingsComponent.setEnumParamTypes(copyEnumState.getParamTypes());
   }
 
   @Override

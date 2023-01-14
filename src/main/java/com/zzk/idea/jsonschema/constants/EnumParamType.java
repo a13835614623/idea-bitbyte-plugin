@@ -37,7 +37,7 @@ public enum EnumParamType {
         this.function = x -> Optional.ofNullable(x.getArgumentList())
                 .map(PsiExpressionList::getExpressions)
                 .filter(exps -> exps.length > argOrder - 1)
-                .map(list -> list[argOrder])
+                .map(list -> list[argOrder-1])
                 .map(PsiElement::getText)
                 .map(text -> {
                     if (text.startsWith("\"")) {
@@ -51,5 +51,10 @@ public enum EnumParamType {
 
     public String getParam(PsiEnumConstant psiEnumConstant){
         return function.apply(psiEnumConstant);
+    }
+
+    @Override
+    public String toString() {
+        return desc;
     }
 }

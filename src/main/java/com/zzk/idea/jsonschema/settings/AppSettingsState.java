@@ -23,7 +23,7 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
   /**
    * 复制枚举参数
    */
-  private CopyEnumState copyEnumState = CopyEnumState.defaultVal();
+  private final CopyEnumState copyEnumState = CopyEnumState.defaultVal();
 
 
   public CopyEnumState getCopyEnumState() {
