@@ -29,9 +29,9 @@ public class AppSettingsComponent {
       horizontalBox.add(paramTypeJComboBox1);
       horizontalBox.add(paramTypeJComboBox2);
       myMainPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(new JBLabel("枚举描述分隔符"), enumDescSplitText, 1, false)
-                .addLabeledComponent(new JBLabel("枚举参数分隔符"), enumParamSplitText, 1, false)
-                .addLabeledComponent(new JBLabel("参数"),horizontalBox, 1)
+                .addLabeledComponent(new JBLabel("Enum description separator"), enumDescSplitText, 1, false)
+                .addLabeledComponent(new JBLabel("Enum Parameter Separator"), enumParamSplitText, 1, false)
+                .addLabeledComponent(new JBLabel("Param"),horizontalBox, 1)
                 .addComponentFillVertically(new JPanel(), 0)
                 .getPanel();
     }

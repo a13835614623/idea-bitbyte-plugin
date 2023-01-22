@@ -13,13 +13,13 @@ import java.util.function.Function;
  * @date 2023/01/13
  */
 public enum EnumParamType {
-    COMMENT("注释", Util::getComment),
-    NAME("枚举名", PsiField::getName),
-    PARAM_1("参数1", 1),
-    PARAM_2("参数2", 2),
-    PARAM_3("参数3", 3),
-    PARAM_4("参数4", 4),
-    PARAM_5("参数5", 5),
+    COMMENT("comment", Util::getComment),
+    NAME("Enum Name", PsiField::getName),
+    PARAM_1("Enum Param 1", 1),
+    PARAM_2("Enum Param 2", 2),
+    PARAM_3("Enum Param 3", 3),
+    PARAM_4("Enum Param 4", 4),
+    PARAM_5("Enum Param 5", 5),
 
     ;
 
