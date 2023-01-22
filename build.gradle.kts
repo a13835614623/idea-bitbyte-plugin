@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.zzk"
-version = "1.0-SNAPSHOT"
+version = "1.0.1"
 
 repositories {
     maven {
@@ -44,6 +44,6 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        token.set("perm:emhhbmd6aWt1YW40NTEz.OTItNzM1Mg==.tM8YqYjQl4W9YzxNSVZQ1jglE96kzI")
     }
 }
