@@ -29,11 +29,11 @@
         <applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
     </extensions>
     <actions>
-        <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.action.CopyJsonSchema" text="复制 Json Schema" description="复制 Json Schema">
+        <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.action.CopyJsonSchema" text="Copy Json Schema" description="Copy Json Schema">
             <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
         </action>
-        <action id="CopyEnumDesc" class="com.zzk.idea.jsonschema.action.CopyEnumDesc" text="复制枚举描述信息" description="复制枚举的描述">
+        <action id="CopyEnumDesc" class="com.zzk.idea.jsonschema.action.CopyEnumDesc" text="Copy Enum Description" description="Copy Enum Description">
             <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
         </action>
