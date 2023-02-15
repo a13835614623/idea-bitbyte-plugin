@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,11 +67,15 @@ public class ChatGptService {
 		try {
 			log.info("请求chatGPT,参数[{}]", requestJson);
 			RequestBody requestBody = RequestBody.create(requestJson, mediaType);
+			String chatGptToken = AppSettingsState.getInstance().getCodeOptimizationState()
+					.getChatGptToken();
+			if (StringUtils.isEmpty(chatGptToken)){
+				return Optional.empty();
+			}
 			Request request = new Request.Builder()
 					.url(BASE_URL + "/v1/completions")
 					.method("POST", requestBody)
-					.addHeader("Authorization", "Bearer " + AppSettingsState.getInstance().getCodeOptimizationState()
-							.getChatGptToken())
+					.addHeader("Authorization", "Bearer " + chatGptToken)
 					.addHeader("Content-Type", "application/json")
 					.addHeader("Content-Length", "")
 					.build();
