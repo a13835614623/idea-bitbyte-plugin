@@ -1,6 +1,5 @@
 package com.zzk.idea.jsonschema.util;
 
-import com.alibaba.fastjson.JSON;
 import com.intellij.lang.ASTNode;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -10,11 +9,10 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.javadoc.PsiDocComment;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class Util {
+public class PsiUtil {
 
     public static PsiFile psiFile(Project project, VirtualFile file) {
         return PsiManager.getInstance(project).findFile(file);

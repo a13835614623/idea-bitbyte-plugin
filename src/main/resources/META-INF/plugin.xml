@@ -27,15 +27,19 @@
                                  id="com.zzk.idea.jsonschema.settings.AppSettingsConfigurable"
                                  displayName="Copy Json Schema"/>
         <applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
+<!--        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>-->
     </extensions>
     <actions>
-        <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.action.CopyJsonSchema" text="Copy Json Schema" description="Copy Json Schema">
+        <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.action.CopyJsonSchemaAction" text="Copy Json Schema" description="Copy json schema">
             <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
         </action>
-        <action id="CopyEnumDesc" class="com.zzk.idea.jsonschema.action.CopyEnumDesc" text="Copy Enum Description" description="Copy Enum Description">
+        <action id="CopyEnumDesc" class="com.zzk.idea.jsonschema.action.CopyEnumDescAction" text="Copy Enum Description" description="Copy enum description">
             <add-to-group group-id="Copy.Paste.Special" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
+        </action>
+        <action id="PerfCode" class="com.zzk.idea.jsonschema.action.CodeOptimizationAction" text="Optimization Selected Code" description="Optimization selected code" >
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>
 </idea-plugin>

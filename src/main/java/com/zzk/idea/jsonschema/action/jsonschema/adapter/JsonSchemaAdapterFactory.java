@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.adapter;
+package com.zzk.idea.jsonschema.action.jsonschema.adapter;
 
 import com.google.common.collect.Maps;
 

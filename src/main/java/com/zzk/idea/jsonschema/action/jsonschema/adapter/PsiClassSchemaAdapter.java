@@ -1,10 +1,10 @@
-package com.zzk.idea.jsonschema.adapter;
+package com.zzk.idea.jsonschema.action.jsonschema.adapter;
 
 import com.intellij.psi.*;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.util.PsiTypesUtil;
-import com.zzk.idea.jsonschema.action.CopyEnumDesc;
-import com.zzk.idea.jsonschema.util.Util;
+import com.zzk.idea.jsonschema.action.CopyEnumDescAction;
+import com.zzk.idea.jsonschema.util.PsiUtil;
 import com.zzk.idea.jsonschema.action.jsonschema.Property;
 import com.zzk.idea.jsonschema.action.jsonschema.Schema;
 import com.zzk.idea.jsonschema.constants.SchemaType;
@@ -23,11 +23,11 @@ public class PsiClassSchemaAdapter extends BaseJsonSchemaAdapter<PsiClass> {
         }
         if (psiClass.isEnum()) {
             PsiDocComment docComment = psiClass.getDocComment();
-            String comment = Util.getComment(docComment);
+            String comment = PsiUtil.getComment(docComment);
             if (StringUtils.isEmpty(comment)) {
                 comment = psiClass.getName();
             }
-            String enumDesc = CopyEnumDesc.getEnumDesc(psiClass);
+            String enumDesc = CopyEnumDescAction.getEnumDesc(psiClass);
             return new Schema().setType(SchemaType.STRING).setDescription(enumDesc)
                     .setTitle(comment).setProperties(null);
         }

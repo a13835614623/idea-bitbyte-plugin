@@ -16,6 +16,7 @@ repositories {
 
 dependencies{
     implementation("com.alibaba:fastjson:1.2.83")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
 // Configure Gradle IntelliJ Plugin

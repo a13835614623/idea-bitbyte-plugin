@@ -5,6 +5,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
+import com.zzk.idea.jsonschema.action.code.CodeOptimizationState;
 import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,9 +26,14 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
    */
   private final CopyEnumState copyEnumState = CopyEnumState.defaultVal();
 
+  private final CodeOptimizationState codeOptimizationState = CodeOptimizationState.defaultVal();
 
   public CopyEnumState getCopyEnumState() {
     return copyEnumState;
+  }
+
+  public CodeOptimizationState getCodeOptimizationState() {
+    return codeOptimizationState;
   }
 
   public static AppSettingsState getInstance() {

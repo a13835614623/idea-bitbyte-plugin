@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.adapter;
+package com.zzk.idea.jsonschema.action.jsonschema.adapter;
 
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;

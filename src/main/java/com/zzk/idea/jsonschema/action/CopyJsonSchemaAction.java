@@ -13,9 +13,10 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.zzk.idea.jsonschema.action.jsonschema.Schema;
 import com.zzk.idea.jsonschema.action.jsonschema.WrapJsonSchema;
-import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapter;
-import com.zzk.idea.jsonschema.adapter.JsonSchemaAdapterFactory;
-import com.zzk.idea.jsonschema.util.Util;
+import com.zzk.idea.jsonschema.action.jsonschema.adapter.JsonSchemaAdapter;
+import com.zzk.idea.jsonschema.action.jsonschema.adapter.JsonSchemaAdapterFactory;
+import com.zzk.idea.jsonschema.util.CopyUtil;
+import com.zzk.idea.jsonschema.util.PsiUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,23 +27,20 @@ import java.awt.datatransfer.StringSelection;
  * @author 张子宽
  * @date 2022/09/20
  */
-public class CopyJsonSchema extends AnAction {
+public class CopyJsonSchemaAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getName().endsWith(".java")) {
             String jsonSchema = getJsonSchema(e.getProject(), file);
-            if (StringUtils.isNoneBlank(jsonSchema)) {
-                StringSelection content = new StringSelection(jsonSchema);
-                CopyPasteManager.getInstance().setContents(content);
-            }
+            CopyUtil.setClipBoardContent(jsonSchema);
         }
     }
 
     private String getJsonSchema(Project project, VirtualFile file) {
         JsonSchemaAdapter<PsiClass> psiClassSchemaAdapter = JsonSchemaAdapterFactory.get(PsiClass.class);
-        PsiFile psiFile = Util.psiFile(project, file);
+        PsiFile psiFile = PsiUtil.psiFile(project, file);
         if (psiFile.getFileType()== JavaFileType.INSTANCE) {
             PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
             PsiClass[] classes = psiJavaFile.getClasses();

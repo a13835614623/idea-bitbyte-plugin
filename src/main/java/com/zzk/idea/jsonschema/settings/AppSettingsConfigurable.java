@@ -1,11 +1,12 @@
 package com.zzk.idea.jsonschema.settings;
 
 import com.intellij.openapi.options.Configurable;
+import com.zzk.idea.jsonschema.action.code.CodeOptimizationState;
 import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;
-import java.util.List;
+
 import java.util.Objects;
 
 /**
@@ -37,27 +38,39 @@ public class AppSettingsConfigurable implements Configurable {
 
   @Override
   public boolean isModified() {
-    CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
+    AppSettingsState instance = AppSettingsState.getInstance();
+    CopyEnumState copyEnumState = instance.getCopyEnumState();
     boolean modified = !mySettingsComponent.getEnumDescSplit().equals(copyEnumState.getDescSplit());
     modified |= !Objects.equals(mySettingsComponent.getEnumParamSplit(), copyEnumState.getParamSplit());
     modified |= !Objects.equals(mySettingsComponent.getEnumParamTypes(), copyEnumState.getParamTypes());
+
+    CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
+    modified |= !Objects.equals(mySettingsComponent.getChatGptToken(), codeOptimizationState.getChatGptToken());
     return modified;
   }
 
   @Override
   public void apply() {
-    CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
+    AppSettingsState instance = AppSettingsState.getInstance();
+    CopyEnumState copyEnumState = instance.getCopyEnumState();
     copyEnumState.setParamSplit(mySettingsComponent.getEnumParamSplit());
     copyEnumState.setDescSplit(mySettingsComponent.getEnumDescSplit());
     copyEnumState.setParamTypes(mySettingsComponent.getEnumParamTypes());
+
+    CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
+    codeOptimizationState.setChatGptToken(mySettingsComponent.getChatGptToken());
   }
 
   @Override
   public void reset() {
-    CopyEnumState copyEnumState = AppSettingsState.getInstance().getCopyEnumState();
+    AppSettingsState instance = AppSettingsState.getInstance();
+    CopyEnumState copyEnumState = instance.getCopyEnumState();
     mySettingsComponent.setEnumDescSplit(copyEnumState.getDescSplit());
     mySettingsComponent.setEnumParamSplit(copyEnumState.getParamSplit());
     mySettingsComponent.setEnumParamTypes(copyEnumState.getParamTypes());
+
+    CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
+    mySettingsComponent.setChatGptToken(codeOptimizationState.getChatGptToken());
   }
 
   @Override

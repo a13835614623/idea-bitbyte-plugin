@@ -1,7 +1,7 @@
 package com.zzk.idea.jsonschema.constants;
 
 import com.intellij.psi.*;
-import com.zzk.idea.jsonschema.util.Util;
+import com.zzk.idea.jsonschema.util.PsiUtil;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -13,7 +13,7 @@ import java.util.function.Function;
  * @date 2023/01/13
  */
 public enum EnumParamType {
-    COMMENT("comment", Util::getComment),
+    COMMENT("comment", PsiUtil::getComment),
     NAME("Enum Name", PsiField::getName),
     PARAM_1("Enum Param 1", 1),
     PARAM_2("Enum Param 2", 2),

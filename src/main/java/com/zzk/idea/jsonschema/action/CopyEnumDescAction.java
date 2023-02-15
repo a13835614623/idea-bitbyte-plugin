@@ -9,12 +9,12 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiEnumConstant;
-import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
 import com.zzk.idea.jsonschema.settings.AppSettingsState;
-import com.zzk.idea.jsonschema.util.Util;
+import com.zzk.idea.jsonschema.util.CopyUtil;
+import com.zzk.idea.jsonschema.util.PsiUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
  * @author 张子宽
  * @date 2022/09/20
  */
-public class CopyEnumDesc extends AnAction {
+public class CopyEnumDescAction extends AnAction {
 
 
     @Override
@@ -36,15 +36,12 @@ public class CopyEnumDesc extends AnAction {
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
         if (file != null && file.getName().endsWith(".java")) {
             String enumDesc = getEnumDesc(e.getProject(), file);
-            if (StringUtils.isNoneBlank(enumDesc)) {
-                StringSelection content = new StringSelection(enumDesc);
-                CopyPasteManager.getInstance().setContents(content);
-            }
+            CopyUtil.setClipBoardContent(enumDesc);
         }
     }
 
     private String getEnumDesc(Project project, VirtualFile file) {
-        PsiFile psiFile = Util.psiFile(project, file);
+        PsiFile psiFile = PsiUtil.psiFile(project, file);
         if (psiFile.getFileType() == JavaFileType.INSTANCE) {
             PsiJavaFileImpl psiJavaFile = (PsiJavaFileImpl) psiFile;
             PsiClass[] classes = psiJavaFile.getClasses();
