@@ -27,10 +27,6 @@ import org.slf4j.LoggerFactory;
  * @date 2023/02/15
  */
 public class ChatGptService {
-	/**
-	 * 日志对象
-	 */
-	private static final Logger log = LoggerFactory.getLogger(ChatGptService.class);
 	private static final OkHttpClient client = new OkHttpClient().newBuilder()
 			.callTimeout(30, TimeUnit.SECONDS)
 			.connectTimeout(30, TimeUnit.SECONDS)
@@ -65,7 +61,7 @@ public class ChatGptService {
 	private static Optional<ChatGptResponse> getChatGptResponse(ChatGptRequest chatGptRequest) {
 		String requestJson = JSON.toJSONString(chatGptRequest);
 		try {
-			log.info("请求chatGPT,参数[{}]", requestJson);
+			System.out.printf("请求chatGPT,参数[%s]%n", requestJson);
 			RequestBody requestBody = RequestBody.create(requestJson, mediaType);
 			String chatGptToken = AppSettingsState.getInstance().getCodeOptimizationState()
 					.getChatGptToken();
@@ -92,7 +88,7 @@ public class ChatGptService {
 						return JSON.parseObject(json, ChatGptResponse.class);
 					});
 		} catch (Exception e) {
-			log.error("请求chatGPT异常,参数[{}]", requestJson, e);
+			System.err.printf("请求chatGPT异常,参数[{}]%n", requestJson, e);
 			return Optional.empty();
 		}
 	}

@@ -27,7 +27,9 @@
                                  id="com.zzk.idea.jsonschema.settings.AppSettingsConfigurable"
                                  displayName="Copy Json Schema"/>
         <applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
-<!--        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>-->
+        <toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+                    factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>
+        <!--        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>-->
     </extensions>
     <actions>
         <action id="CopyJsonSchema" class="com.zzk.idea.jsonschema.action.CopyJsonSchemaAction" text="Copy Json Schema" description="Copy json schema">
@@ -41,5 +43,9 @@
         <action id="PerfCode" class="com.zzk.idea.jsonschema.action.CodeOptimizationAction" text="Optimization Selected Code" description="Optimization selected code" >
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
+        <action id="TestCode" class="com.zzk.idea.jsonschema.action.CodeTestAction" text="Test Selected Code" description="Test selected code" >
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+
     </actions>
 </idea-plugin>
