@@ -6,32 +6,35 @@ plugins {
 }
 
 group = "com.zzk"
-version = "1.0-SNAPSHOT"
+version = "1.0.2"
 
 repositories {
-    mavenCentral()
+    maven {
+        setUrl("https://maven.aliyun.com/repository/public")
+    }
 }
 
 dependencies{
-    implementation("org.projectlombok:lombok:1.18.24")
+    implementation("com.alibaba:fastjson:1.2.83")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    version.set("2022.2")
+    version.set("2021.2")
     type.set("IC") // Target IDE Platform
     plugins.set(listOf("java"))
 }
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 
 
 tasks {
 
     patchPluginXml {
-        sinceBuild.set("213")
+        sinceBuild.set("212")
         untilBuild.set("223.*")
     }
 
@@ -42,6 +45,6 @@ tasks {
     }
 
     publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        token.set("perm:emhhbmd6aWt1YW40NTEz.OTItNzM1Mg==.tM8YqYjQl4W9YzxNSVZQ1jglE96kzI")
     }
 }
