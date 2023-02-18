@@ -1,10 +1,10 @@
-package com.zzk.idea.jsonschema.action.jsonschema.adapter;
+package com.zzk.idea.jsonschema.action.copy.jsonschema.adapter;
 
 import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.zzk.idea.jsonschema.util.PsiUtil;
-import com.zzk.idea.jsonschema.action.jsonschema.Schema;
+import com.zzk.idea.jsonschema.action.copy.jsonschema.Schema;
 
 public class PsiFieldSchemaAdapter extends BaseJsonSchemaAdapter<PsiField> {
 

@@ -13,8 +13,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
 
   public static MyToolWindow TOOL_WINDOW;
 
-  public static final String ID = "Android Profiler";
-
   /**
    * Create the tool window content.
    *

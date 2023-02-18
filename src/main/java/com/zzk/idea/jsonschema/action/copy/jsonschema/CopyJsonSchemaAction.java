@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.action;
+package com.zzk.idea.jsonschema.action.copy.jsonschema;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -6,21 +6,17 @@ import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.ide.CopyPasteManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
-import com.zzk.idea.jsonschema.action.jsonschema.Schema;
-import com.zzk.idea.jsonschema.action.jsonschema.WrapJsonSchema;
-import com.zzk.idea.jsonschema.action.jsonschema.adapter.JsonSchemaAdapter;
-import com.zzk.idea.jsonschema.action.jsonschema.adapter.JsonSchemaAdapterFactory;
+import com.zzk.idea.jsonschema.action.copy.jsonschema.Schema;
+import com.zzk.idea.jsonschema.action.copy.jsonschema.WrapJsonSchema;
+import com.zzk.idea.jsonschema.action.copy.jsonschema.adapter.JsonSchemaAdapter;
+import com.zzk.idea.jsonschema.action.copy.jsonschema.adapter.JsonSchemaAdapterFactory;
 import com.zzk.idea.jsonschema.util.CopyUtil;
 import com.zzk.idea.jsonschema.util.PsiUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.datatransfer.StringSelection;
 
 /**
  * 复制 json Schema

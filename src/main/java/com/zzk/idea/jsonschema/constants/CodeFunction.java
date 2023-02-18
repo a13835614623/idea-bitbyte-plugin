@@ -9,15 +9,15 @@ public enum CodeFunction {
 	/**
 	 * 优化
 	 */
-	OPTIMIZATION("优化一下这段代码:\n%s"),
+	OPTIMIZATION("Optimize this code:\n%s"),
 	/**
 	 * 单测
 	 */
-	TEST("为这段代码写一下单元测试:\n%s")
+	TEST("Write a unit test for this code:\n%s")
 	;
 
 
-	private String text;
+	private final String text;
 
 	CodeFunction(String text) {
 		this.text = text;

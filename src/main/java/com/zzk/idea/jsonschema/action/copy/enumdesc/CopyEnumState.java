@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.action.enumdesc;
+package com.zzk.idea.jsonschema.action.copy.enumdesc;
 
 import com.zzk.idea.jsonschema.constants.EnumParamType;
 

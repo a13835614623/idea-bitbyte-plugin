@@ -2,7 +2,7 @@ package com.zzk.idea.jsonschema.settings;
 
 import com.intellij.openapi.options.Configurable;
 import com.zzk.idea.jsonschema.action.code.CodeOptimizationState;
-import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
+import com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumState;
 import org.jetbrains.annotations.Nls;
 
 import javax.swing.*;

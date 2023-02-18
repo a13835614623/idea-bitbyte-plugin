@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.action.jsonschema;
+package com.zzk.idea.jsonschema.action.copy.jsonschema;
 
 import com.zzk.idea.jsonschema.constants.SchemaType;
 
