@@ -1,9 +1,11 @@
 package com.zzk.idea.jsonschema.action.linemarker;
 
+import java.awt.event.MouseEvent;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.codeInsight.daemon.GutterName;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
@@ -57,7 +59,7 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
         private ToTestMarkerInfo(@NotNull PsiElement psiElement, PsiMethod psiMethod, TestFramework testFramework) {
             super(psiElement, psiElement.getTextRange(), testFramework.getIcon(),
                     FunctionUtil.constant(Message.GENERATE_TEST_METHOD.message()),
-                    null,
+                    (e, elt) -> {},
                     GutterIconRenderer.Alignment.RIGHT);
             this.psiMethod = psiMethod;
             this.testFramework = testFramework;
