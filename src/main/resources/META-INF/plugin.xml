@@ -16,7 +16,7 @@
 	<description>This is a plug-in that can copy the JsonSchema of the current class, the json schema of the class, and
 		the enumeration description.
 	</description>
-	<version>2023.1.22</version>
+	<version>2023.2.19</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
