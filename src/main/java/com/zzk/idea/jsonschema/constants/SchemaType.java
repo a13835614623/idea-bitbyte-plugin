@@ -4,6 +4,7 @@ package com.zzk.idea.jsonschema.constants;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.util.PsiTypesUtil;
+import jnr.a64asm.OP;
 import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,14 +26,14 @@ public enum SchemaType {
     /**
      * 类型参数
      */
-    STRING("string", "字符串", List.of(String.class)),
-    NUMBER("number", "数字", List.of(Double.class, Long.class,BigDecimal.class, double.class, long.class)),
-    INTEGER("integer", "整数", List.of(Integer.class, Short.class, Byte.class,
+    STRING("string", "字符串", "", List.of(String.class)),
+    NUMBER("number", "数字", 0, List.of(Double.class, Long.class, BigDecimal.class, double.class, long.class)),
+    INTEGER("integer", "整数", 0, List.of(Integer.class, Short.class, Byte.class,
             int.class, short.class, byte.class)),
-    OBJECT("object", "对象", List.of()),
-    ARRAY("array", "数组", List.of(Collection.class)),
-    BOOLEAN("boolean", "布尔值", List.of(Boolean.class, boolean.class)),
-    NULL("null", "null", List.of());
+    OBJECT("object", "对象", null, List.of()),
+    ARRAY("array", "数组", new Object[] {}, List.of(Collection.class)),
+    BOOLEAN("boolean", "布尔值", false, List.of(Boolean.class, boolean.class)),
+    NULL("null", "null", null, List.of());
 
     /**
      * 值
@@ -44,13 +46,20 @@ public enum SchemaType {
 
     private final List<Class<?>> clazz;
 
+    private final Object defaultVal;
+
     private static final Map<String, SchemaType> ENUM_MAP = Arrays.stream(SchemaType.values())
             .collect(Collectors.toMap(SchemaType::getValue, Function.identity()));
 
-    SchemaType(String value, String desc, List<Class<?>> clazz) {
+    SchemaType(String value, String desc, Object defaultVal, List<Class<?>> clazz) {
         this.value = value;
         this.desc = desc;
+        this.defaultVal = defaultVal;
         this.clazz = clazz;
+    }
+
+    public Object getDefaultVal() {
+        return defaultVal;
     }
 
     public List<Class<?>> getClazz() {
@@ -107,11 +116,8 @@ public enum SchemaType {
         }
         if (psiType instanceof PsiPrimitiveType) {
             PsiPrimitiveType psiPrimitiveType = ((PsiPrimitiveType) psiType);
-            SchemaType value1 = parseByClassName(psiPrimitiveType.getCanonicalText());
-            if (value1 != null) {
-                return value1;
-            }
-            throw new RuntimeException("非法的类型:" + psiPrimitiveType);
+            return parseByClassName(psiPrimitiveType.getCanonicalText())
+                    .orElseThrow(()-> new RuntimeException("非法的类型:" + psiPrimitiveType));
         }
         if (psiType instanceof PsiClassReferenceType) {
             PsiClassReferenceType psiClassReferenceType = ((PsiClassReferenceType) psiType);
@@ -125,25 +131,18 @@ public enum SchemaType {
             if (canonicalText.equals(CommonClassNames.JAVA_LANG_STRING)) {
                 return STRING;
             }
-            SchemaType value1 = parseByClassName(canonicalText);
-            if (value1 != null) {
-                return value1;
-            }
+            return parseByClassName(canonicalText).orElse(OBJECT);
         }
         return OBJECT;
     }
 
-    @Nullable
-    private static SchemaType parseByClassName(String canonicalText) {
+    private static Optional<SchemaType> parseByClassName(String canonicalText) {
         for (SchemaType value : values()) {
             if (value.getClazz().stream().anyMatch(x -> x.getName().equals(canonicalText))) {
-                return value;
+                return Optional.of(value);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
-    public static void main(String[] args) {
-        System.out.println(Integer.class.getName());
-    }
 }

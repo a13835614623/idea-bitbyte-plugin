@@ -36,7 +36,7 @@ public class PsiTypeSchemaAdapter extends BaseJsonSchemaAdapter<PsiType> {
             }
         }
         if (type == SchemaType.OBJECT){
-            return JsonSchemaAdapterFactory.get(PsiClass.class).getSchema(PsiTypesUtil.getPsiClass(psiType));
+            return JsonSchemaAdapterFactory.getRequire(PsiClass.class).getSchema(PsiTypesUtil.getPsiClass(psiType));
         }
         return new Schema().setType(type);
     }

@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class PsiClassSchemaAdapter extends BaseJsonSchemaAdapter<PsiClass> {
 
@@ -28,12 +29,20 @@ public class PsiClassSchemaAdapter extends BaseJsonSchemaAdapter<PsiClass> {
                 comment = psiClass.getName();
             }
             String enumDesc = CopyEnumDescAction.getEnumDesc(psiClass);
-            return new Schema().setType(SchemaType.STRING).setDescription(enumDesc)
-                    .setTitle(comment).setProperties(null);
+            List<String> enumValues = Stream.of(psiClass.getAllFields())
+                    .filter(x -> x instanceof PsiEnumConstant)
+                    .map(x -> (PsiEnumConstant) x)
+                    .map(PsiField::getName)
+                    .collect(Collectors.toList());
+            return new Schema().setType(SchemaType.STRING)
+                    .setDescription(enumDesc)
+                    .setTitle(comment)
+                    .setEnumValues(enumValues)
+                    .setProperties(null);
         }
         PsiClassType classType = PsiTypesUtil.getClassType(psiClass);
         SchemaType type = SchemaType.parse(classType);
-        JsonSchemaAdapter<PsiField> fieldSchemaAdapter = JsonSchemaAdapterFactory.get(PsiField.class);
+        JsonSchemaAdapter<PsiField> fieldSchemaAdapter = JsonSchemaAdapterFactory.getRequire(PsiField.class);
         if (type == SchemaType.OBJECT) {
             PsiField[] allFields = psiClass.getAllFields();
             List<Property> properties = Arrays.stream(allFields)

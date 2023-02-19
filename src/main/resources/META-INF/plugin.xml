@@ -31,29 +31,45 @@
 		<applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
 		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"
 					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>
-		<!--        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>-->
+		<codeInsight.lineMarkerProvider language="JAVA"
+										implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>
 	</extensions>
 	<actions>
-		<action id="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction" class="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"
+		<action id="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"
+				class="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"
 				text="Copy Json Schema" description="Copy json schema">
 			<add-to-group group-id="Copy.Paste.Special" anchor="first"/>
-			<keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
 		</action>
-		<action id="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction" class="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"
+		<action id="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"
+				class="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"
 				text="Copy Enum Description" description="Copy enum description">
-			<keyboard-shortcut keymap="$default" first-keystroke="meta J"/>
+			<add-to-group group-id="Copy.Paste.Special" anchor="after"
+						  relative-to-action="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"/>
 		</action>
-		<group id="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"
-			   class="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"
-			   text="Code Optimization"
-			   popup="true">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-			<action id="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction" class="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"
-					text="Optimization Selected Code" description="Optimization selected code">
-			</action>
-			<action id="com.zzk.idea.jsonschema.action.code.CodeTestAction" class="com.zzk.idea.jsonschema.action.code.CodeTestAction" text="Test Selected Code"
-					description="Test selected code">
-			</action>
-		</group>
+		<action id="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"
+				class="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"
+				text="Copy Class Name With Package" description="Copy class name with package">
+			<add-to-group group-id="Copy.Paste.Special" anchor="after"
+						  relative-to-action="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"/>
+		</action>
+		<action id="com.zzk.idea.jsonschema.action.copy.json.CopyJsonWithDefaultValueAction"
+				class="com.zzk.idea.jsonschema.action.copy.json.CopyJsonWithDefaultValueAction"
+				text="Copy Json With Default Value" description="Copy json with default value">
+			<add-to-group group-id="Copy.Paste.Special" anchor="after"
+						  relative-to-action="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"/>
+		</action>
+
+		<!--		<group id="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
+		<!--			   class="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
+		<!--			   text="Code Optimization"-->
+		<!--			   popup="true">-->
+		<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
+		<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction" class="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
+		<!--					text="Optimization Selected Code" description="Optimization selected code">-->
+		<!--			</action>-->
+		<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeTestAction" class="com.zzk.idea.jsonschema.action.code.CodeTestAction" text="Test Selected Code"-->
+		<!--					description="Test selected code">-->
+		<!--			</action>-->
+		<!--		</group>-->
 	</actions>
 </idea-plugin>
