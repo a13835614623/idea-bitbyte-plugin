@@ -32,7 +32,7 @@
 		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"
 					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>
 		<codeInsight.lineMarkerProvider language="JAVA"
-										implementationClass="com.zzk.idea.jsonschema.action.linemarker.SimpleLineMarkerProvider"/>
+										implementationClass="com.zzk.idea.jsonschema.action.linemarker.CreateTestLineMarkerProvider"/>
 	</extensions>
 	<actions>
 		<action id="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"

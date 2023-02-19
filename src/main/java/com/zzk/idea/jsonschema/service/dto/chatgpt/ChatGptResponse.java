@@ -1,4 +1,4 @@
-package com.zzk.idea.jsonschema.service;
+package com.zzk.idea.jsonschema.service.dto.chatgpt;
 
 import java.util.List;
 import com.alibaba.fastjson.annotation.JSONField;
