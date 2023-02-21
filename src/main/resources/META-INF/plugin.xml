@@ -5,7 +5,7 @@
 
 	<!-- Public plugin name should be written in Title Case.
 		 Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-	<name>Copy Json Schema</name>
+	<name>BitByte</name>
 
 	<!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
 	<vendor email="zhangzikuan4513@foxmail.com">zzk</vendor>
@@ -13,7 +13,7 @@
 	<!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
 		 Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
 		 Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-	<description>This is a plug-in that can copy the JsonSchema of the current class, the json schema of the class, and
+	<description>This is a plugin that can copy the JsonSchema of the current class, the json schema of the class, and
 		the enumeration description.
 	</description>
 	<version>2023.2.19</version>
@@ -29,8 +29,8 @@
 								 id="com.zzk.idea.jsonschema.settings.AppSettingsConfigurable"
 								 displayName="Copy Json Schema"/>
 		<applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
-		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"
-					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>
+<!--		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"-->
+<!--					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>-->
 		<codeInsight.lineMarkerProvider language="JAVA"
 										implementationClass="com.zzk.idea.jsonschema.action.linemarker.CreateTestLineMarkerProvider"/>
 	</extensions>
@@ -59,17 +59,19 @@
 						  relative-to-action="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"/>
 		</action>
 
-		<!--		<group id="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
-		<!--			   class="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
-		<!--			   text="Code Optimization"-->
-		<!--			   popup="true">-->
-		<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
-		<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction" class="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
-		<!--					text="Optimization Selected Code" description="Optimization selected code">-->
-		<!--			</action>-->
-		<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeTestAction" class="com.zzk.idea.jsonschema.action.code.CodeTestAction" text="Test Selected Code"-->
-		<!--					description="Test selected code">-->
-		<!--			</action>-->
-		<!--		</group>-->
+<!--		<group id="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
+<!--			   class="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
+<!--			   text="Code Optimization"-->
+<!--			   popup="true">-->
+<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
+<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
+<!--					class="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
+<!--					text="Optimization Selected Code" description="Optimization selected code">-->
+<!--			</action>-->
+<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeTestAction"-->
+<!--					class="com.zzk.idea.jsonschema.action.code.CodeTestAction" text="Test Selected Code"-->
+<!--					description="Test selected code">-->
+<!--			</action>-->
+<!--		</group>-->
 	</actions>
 </idea-plugin>

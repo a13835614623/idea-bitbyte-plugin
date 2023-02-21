@@ -32,7 +32,7 @@ public class AppSettingsComponent {
 				.addLabeledComponent(new JBLabel("Enum description separator"), enumDescSplitText, 1, false)
 				.addLabeledComponent(new JBLabel("Enum parameter separator"), enumParamSplitText, 1, false)
 				.addLabeledComponent(new JBLabel("Param"), horizontalBox, 1)
-				.addLabeledComponent(new JBLabel("ChatGPT token"), chatGptTokenText, 1,false)
+				// .addLabeledComponent(new JBLabel("ChatGPT token"), chatGptTokenText, 1,false)
 				.addComponentFillVertically(new JPanel(), 0)
 				.getPanel();
 	}
