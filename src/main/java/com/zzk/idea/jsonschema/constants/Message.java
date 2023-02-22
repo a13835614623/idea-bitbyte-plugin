@@ -16,10 +16,13 @@ public enum Message {
 	NOT_FOUND_SRC_PACKAGE("The source package could not be found"),
 	NOT_FOUND_SRC_CLASS("The source class could not be found"),
 	NOT_FOUND_SRC_MODULE("The source module could not be found"),
-
+	CONVERT_SELECTED_TEXT("Convert selected text"),
+	TO_UNDERLINE("To underline"),
+	TO_UPPER_CASE("To upperCase"),
+	TO_LOWER_CASE("To lowerCase"),
 	;
 
-	private final String desc;
+    private final String desc;
 
 	Message(String desc) {
 		this.desc = desc;

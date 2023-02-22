@@ -11,6 +11,7 @@ import com.zzk.idea.jsonschema.util.CopyUtil;
 import com.zzk.idea.jsonschema.util.JsonSchemaUtil;
 import com.zzk.idea.jsonschema.util.JsonUtil;
 import com.zzk.idea.jsonschema.util.PsiUtil;
+import org.intellij.plugins.relaxNG.references.FileReferenceUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**

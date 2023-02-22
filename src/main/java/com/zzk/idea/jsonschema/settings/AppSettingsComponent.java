@@ -6,6 +6,7 @@ import com.intellij.ui.components.JBTextField;
 import com.intellij.ui.components.panels.HorizontalBox;
 import com.intellij.util.ui.FormBuilder;
 import com.zzk.idea.jsonschema.constants.EnumParamType;
+import com.zzk.idea.jsonschema.constants.UIMessage;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -29,9 +30,10 @@ public class AppSettingsComponent {
 		horizontalBox.add(paramTypeJComboBox1);
 		horizontalBox.add(paramTypeJComboBox2);
 		myMainPanel = FormBuilder.createFormBuilder()
-				.addLabeledComponent(new JBLabel("Enum description separator"), enumDescSplitText, 1, false)
-				.addLabeledComponent(new JBLabel("Enum parameter separator"), enumParamSplitText, 1, false)
-				.addLabeledComponent(new JBLabel("Param"), horizontalBox, 1)
+				.addComponent(UIMessage.COPY_SETTING.label())
+				.addLabeledComponent(UIMessage.ENUM_DESCRIPTION_SEPARATOR.label(), enumDescSplitText, 1, false)
+				.addLabeledComponent(UIMessage.ENUM_PARAMETER_SEPARATOR.label(), enumParamSplitText, 1, false)
+				.addLabeledComponent(UIMessage.PARAM.label(), horizontalBox, 1)
 				// .addLabeledComponent(new JBLabel("ChatGPT token"), chatGptTokenText, 1,false)
 				.addComponentFillVertically(new JPanel(), 0)
 				.getPanel();
