@@ -1,5 +1,9 @@
 package com.zzk.idea.jsonschema.action.copy.enumdesc;
 
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -10,11 +14,8 @@ import com.intellij.psi.PsiEnumConstant;
 import com.zzk.idea.jsonschema.settings.AppSettingsState;
 import com.zzk.idea.jsonschema.util.CopyUtil;
 import com.zzk.idea.jsonschema.util.PsiUtil;
+import com.zzk.idea.jsonschema.util.VfsUtil;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * 复制枚举的描述
@@ -28,7 +29,7 @@ public class CopyEnumDescAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
-        if (file != null && file.getName().endsWith(".java")) {
+        if (VfsUtil.isJavaFile(file)) {
             getEnumDesc(e.getProject(), file)
                     .ifPresent(CopyUtil::setClipBoardContent);
         }

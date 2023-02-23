@@ -9,6 +9,7 @@ import com.zzk.idea.jsonschema.util.CopyUtil;
 import com.zzk.idea.jsonschema.util.JsonSchemaUtil;
 import com.zzk.idea.jsonschema.util.JsonUtil;
 import com.zzk.idea.jsonschema.util.PsiUtil;
+import com.zzk.idea.jsonschema.util.VfsUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -21,12 +22,13 @@ public class CopyJsonWithDefaultValueAction extends AnAction {
 	@Override
 	public void actionPerformed(@NotNull AnActionEvent e) {
 		VirtualFile file = e.getData(CommonDataKeys.VIRTUAL_FILE);
-		if (file != null && file.getName().endsWith(".java")) {
-			PsiUtil.firstPsiJavaClass(e.getProject(), file)
-					.map(JsonSchemaUtil::getJsonSchema)
-					.map(Schema::defaultValue)
-					.map(JsonUtil::toJson)
-					.ifPresent(CopyUtil::setClipBoardContent);
+		if (!VfsUtil.isJavaFile(file)) {
+			return;
 		}
+		PsiUtil.firstPsiJavaClass(e.getProject(), file)
+				.map(JsonSchemaUtil::getJsonSchema)
+				.map(Schema::defaultValue)
+				.map(JsonUtil::toJson)
+				.ifPresent(CopyUtil::setClipBoardContent);
 	}
 }
