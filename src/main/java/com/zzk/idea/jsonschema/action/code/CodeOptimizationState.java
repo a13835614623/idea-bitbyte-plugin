@@ -20,7 +20,7 @@ public class CodeOptimizationState {
 
 	public static CodeOptimizationState defaultVal() {
 		CodeOptimizationState codeOptimizationState = new CodeOptimizationState();
-		codeOptimizationState.setChatGptToken("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");
+		codeOptimizationState.setChatGptToken("");
 		codeOptimizationState.setChatGptModel(ChatGptModel.CODE_DAVINCI_002);
 		return codeOptimizationState;
 	}

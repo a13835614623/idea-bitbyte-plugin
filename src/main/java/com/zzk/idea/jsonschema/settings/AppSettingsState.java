@@ -6,7 +6,7 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.zzk.idea.jsonschema.action.code.CodeOptimizationState;
-import com.zzk.idea.jsonschema.action.enumdesc.CopyEnumState;
+import com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

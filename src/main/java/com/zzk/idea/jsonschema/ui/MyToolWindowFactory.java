@@ -2,6 +2,7 @@
 
 package com.zzk.idea.jsonschema.ui;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -13,8 +14,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
 
   public static MyToolWindow TOOL_WINDOW;
 
-  public static final String ID = "Android Profiler";
-
   /**
    * Create the tool window content.
    *
@@ -24,7 +23,8 @@ public class MyToolWindowFactory implements ToolWindowFactory {
   @Override
   public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
     TOOL_WINDOW = new MyToolWindow(toolWindow);
-    Content content = ContentFactory.SERVICE.getInstance().createContent(TOOL_WINDOW.getContent(), "", false);
+    Content content = ApplicationManager.getApplication().getService(ContentFactory.class)
+            .createContent(TOOL_WINDOW.getContent(), "", false);
     toolWindow.getContentManager().addContent(content);
   }
 
