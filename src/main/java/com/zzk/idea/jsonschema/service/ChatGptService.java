@@ -10,6 +10,7 @@ import com.zzk.idea.jsonschema.service.dto.chatgpt.ChatGptRequest;
 import com.zzk.idea.jsonschema.service.dto.chatgpt.ChatGptResponse;
 import com.zzk.idea.jsonschema.service.dto.chatgpt.ChoicesItem;
 import com.zzk.idea.jsonschema.settings.AppSettingsState;
+import com.zzk.idea.jsonschema.util.JsonUtil;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -56,7 +57,7 @@ public class ChatGptService {
 	}
 
 	private static Optional<ChatGptResponse> getChatGptResponse(ChatGptRequest chatGptRequest) {
-		String requestJson = JSON.toJSONString(chatGptRequest);
+		String requestJson = JsonUtil.toJson(chatGptRequest);
 		try {
 			System.out.printf("请求chatGPT,参数[%s]%n", requestJson);
 			RequestBody requestBody = RequestBody.create(requestJson, mediaType);

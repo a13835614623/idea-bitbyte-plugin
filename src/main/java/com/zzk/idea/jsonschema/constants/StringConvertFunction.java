@@ -12,24 +12,24 @@ import org.jetbrains.annotations.NotNull;
  * @date 2023/02/22
  */
 public enum StringConvertFunction implements Function<String, String> {
-    TO_UNDERLINE_UPPER_CASE(s -> {
-        String ss = s.trim();
-        int length = ss.length();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            char c = s.charAt(i);
-            // 前一个不是空格
-            if (c == ' ') {
-                sb.append("_");
-                continue;
-            } else if (c >= 'A' && c <= 'Z' && i > 0 && s.charAt(i - 1) != ' ') {
-                sb.append("_");
-            }
-            sb.append(c);
-        }
-        return sb.toString().toUpperCase();
-    }),
+    /**
+     * 转换成下划线大写
+     * 例如:to_underline_upper_case_test->TO_UNDERLINE_UPPER_CASE_TEST
+     * 例如:to underline upper case test->TO_UNDERLINE_UPPER_CASE_TEST
+     */
+    TO_UNDERLINE_UPPER_CASE(StringConvertFunction::toUnderlineUpperCase),
+    /**
+     * 转换成下划线小写
+     * 例如：TO_UNDERLINE_UPPER_CASE_TEST -> to_underline_upper_case_test
+     */
+    TO_UNDERLINE_LOWER_CASE(s -> toUnderlineUpperCase(s).toLowerCase()),
+    /**
+     * 转大写
+     */
     TO_UPPER_CASE(String::toUpperCase),
+    /**
+     * 转小写
+     */
     TO_LOWER_CASE(String::toLowerCase),
     ;
 
@@ -47,6 +47,36 @@ public enum StringConvertFunction implements Function<String, String> {
         this.text = toFirstUpperCaseElseLowerCase(name());
     }
 
+    @Override
+    public String apply(String s) {
+        if (StringUtils.isEmpty(s)) {
+            return "";
+        }
+        return converter.apply(s);
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    private static String toUnderlineUpperCase(String s) {
+        String ss = s.trim();
+        int length = ss.length();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            char c = s.charAt(i);
+            // 前一个不是空格
+            if (c == ' ') {
+                sb.append("_");
+                continue;
+            } else if (c >= 'A' && c <= 'Z' && i > 0 && s.charAt(i - 1) != ' ') {
+                sb.append("_");
+            }
+            sb.append(c);
+        }
+        return sb.toString().toUpperCase();
+    }
+
     @NotNull
     private static String toFirstUpperCaseElseLowerCase(String name) {
         String replace = name.toLowerCase().replace("_", " ");
@@ -60,22 +90,5 @@ public enum StringConvertFunction implements Function<String, String> {
             }
         }
         return sb.toString();
-    }
-
-    @Override
-    public String apply(String s) {
-        if (StringUtils.isEmpty(s)) {
-            return "";
-        }
-        return converter.apply(s);
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(TO_UNDERLINE_UPPER_CASE.apply("firstNameAbc"));
-        System.out.println(TO_UNDERLINE_UPPER_CASE.apply("first name abc"));
     }
 }

@@ -1,19 +1,15 @@
 package com.zzk.idea.jsonschema.action.copy.jsonschema;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONField;
-import com.twelvemonkeys.util.CollectionUtil;
-import com.zzk.idea.jsonschema.constants.SchemaType;
-import org.apache.commons.collections.CollectionUtils;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
+
+import com.zzk.idea.jsonschema.constants.SchemaType;
+import com.zzk.idea.jsonschema.util.JsonUtil;
 
 /**
  * Schema对象
@@ -101,7 +97,7 @@ public class Schema {
 
 	@Override
 	public String toString() {
-		return JSON.toJSONString(this);
+		return JsonUtil.toJson(this);
 	}
 
 

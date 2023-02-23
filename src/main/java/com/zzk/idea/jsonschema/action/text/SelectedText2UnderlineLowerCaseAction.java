@@ -2,9 +2,9 @@ package com.zzk.idea.jsonschema.action.text;
 
 import com.zzk.idea.jsonschema.constants.StringConvertFunction;
 
-public class SelectedText2UnderlineAction extends BaseSelectedTextConvertAction{
+public class SelectedText2UnderlineLowerCaseAction extends BaseSelectedTextConvertAction {
 
-    public SelectedText2UnderlineAction() {
+    public SelectedText2UnderlineLowerCaseAction() {
         super(StringConvertFunction.TO_UNDERLINE_UPPER_CASE);
     }
 }

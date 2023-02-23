@@ -1,7 +1,7 @@
 package com.zzk.idea.jsonschema.action.copy.jsonschema;
 
 
-import com.alibaba.fastjson.JSON;
+import com.zzk.idea.jsonschema.util.JsonUtil;
 
 /**
  * Property
@@ -38,6 +38,6 @@ public class Property {
 
     @Override
     public String toString() {
-        return JSON.toJSONString(this);
+        return JsonUtil.toJson(this);
     }
 }
