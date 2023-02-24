@@ -49,7 +49,7 @@
 								 displayName="Copy Json Schema"/>
 		<applicationService serviceImplementation="com.zzk.idea.bitbyte.settings.AppSettingsState"/>
 		<!--		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"-->
-		<!--					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>-->
+		<!--					factoryClass="com.zzk.idea.bitbyte.ui.MyToolWindowFactory"/>-->
 		<codeInsight.lineMarkerProvider language="JAVA"
 										implementationClass="com.zzk.idea.bitbyte.action.linemarker.CreateTestLineMarkerProvider"/>
 		<intentionAction>
@@ -66,8 +66,8 @@
 		</intentionAction>
 	</extensions>
 	<actions>
-		<action id="com.zzk.idea.bitbyte.action.copy.jsonschema.CopyJsonSchemaAction"
-				class="com.zzk.idea.bitbyte.action.copy.jsonschema.CopyJsonSchemaAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"
+				class="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"
 				text="Copy Json Schema" description="Copy json schema">
 			<add-to-group group-id="Copy.Paste.Special" anchor="first"/>
 		</action>
@@ -75,35 +75,35 @@
 				class="com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumDescAction"
 				text="Copy Enum Description" description="Copy enum description">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
-						  relative-to-action="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"/>
+						  relative-to-action="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"/>
 		</action>
 		<action id="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
 				class="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
 				text="Copy Class Name With Package" description="Copy class name with package">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
-						  relative-to-action="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"/>
+						  relative-to-action="com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumDescAction"/>
 		</action>
 		<action id="com.zzk.idea.bitbyte.action.copy.json.CopyJsonWithDefaultValueAction"
 				class="com.zzk.idea.bitbyte.action.copy.json.CopyJsonWithDefaultValueAction"
 				text="Copy Json With Default Value" description="Copy json with default value">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
-						  relative-to-action="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"/>
+						  relative-to-action="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"/>
 		</action>
 
-<!--		<group id="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
-<!--			   class="com.zzk.idea.jsonschema.action.code.CodeFunctionActionGroup"-->
-<!--			   text="Code Optimization"-->
-<!--			   popup="true">-->
-<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
-<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
-<!--					class="com.zzk.idea.jsonschema.action.code.CodeOptimizationAction"-->
-<!--					text="Optimization Selected Code" description="Optimization selected code">-->
-<!--			</action>-->
-<!--			<action id="com.zzk.idea.jsonschema.action.code.CodeTestAction"-->
-<!--					class="com.zzk.idea.jsonschema.action.code.CodeTestAction" text="Test Selected Code"-->
-<!--					description="Test selected code">-->
-<!--			</action>-->
-<!--		</group>-->
+		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
+		<!--			   class="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
+		<!--			   text="Code Optimization"-->
+		<!--			   popup="true">-->
+		<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
+		<!--			<action id="com.zzk.idea.bitbyte.action.code.CodeOptimizationAction"-->
+		<!--					class="com.zzk.idea.bitbyte.action.code.CodeOptimizationAction"-->
+		<!--					text="Optimization Selected Code" description="Optimization selected code">-->
+		<!--			</action>-->
+		<!--			<action id="com.zzk.idea.bitbyte.action.code.CodeTestAction"-->
+		<!--					class="com.zzk.idea.bitbyte.action.code.CodeTestAction" text="Test Selected Code"-->
+		<!--					description="Test selected code">-->
+		<!--			</action>-->
+		<!--		</group>-->
 	</actions>
 
 </idea-plugin>
