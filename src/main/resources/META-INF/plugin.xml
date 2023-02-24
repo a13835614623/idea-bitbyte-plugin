@@ -27,6 +27,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+        <li><b>1.1.1</b> Supplemental plugin description copy and changelog.</li>
         <li><b>1.1.0</b> Added the function of selecting string processing, support case conversion and naming method conversion.</li>
         <li><b>1.0.2</b> Support the rapid creation of test methods for the specified methods of the current class.</li>
         <li><b>1.0.1</b> Support for generating JSON strings for the current class using default values.</li>
