@@ -46,7 +46,7 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<applicationConfigurable parentId="tools" instance="com.zzk.idea.bitbyte.settings.AppSettingsConfigurable"
 								 id="com.zzk.idea.bitbyte.settings.AppSettingsConfigurable"
-								 displayName="Copy Json Schema"/>
+								 displayName="BitByte"/>
 		<applicationService serviceImplementation="com.zzk.idea.bitbyte.settings.AppSettingsState"/>
 		<!--		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"-->
 		<!--					factoryClass="com.zzk.idea.bitbyte.ui.MyToolWindowFactory"/>-->

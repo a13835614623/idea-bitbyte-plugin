@@ -16,8 +16,6 @@ dependencies{
     implementation("com.alibaba:fastjson:1.2.83")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    // https://github.com/yindz/common-random
-    implementation("com.apifan.common.common-random:1.0.19")
 }
 
 // Configure Gradle IntelliJ Plugin
