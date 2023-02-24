@@ -26,7 +26,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.application.ReadAction;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.module.ModuleUtilCore;
@@ -88,7 +87,6 @@ public class CreateTestMethodAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         PsiElement element = srcMethod;
-        Editor editor = e.getData(CommonDataKeys.EDITOR);
         Project project = e.getRequiredData(CommonDataKeys.PROJECT);
         PsiFile containingFile = srcMethod.getFirstChild().getContainingFile();
         VirtualFile virtualFile = containingFile.getVirtualFile();

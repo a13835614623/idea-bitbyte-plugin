@@ -13,7 +13,7 @@ public enum ChatGptModel {
 
 	;
 
-	private String value;
+	private final String value;
 
 
 	ChatGptModel(String value) {

@@ -13,15 +13,28 @@
 	<!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
 		 Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
 		 Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-	<description>This is a plug-in integrating various small tools, which aims to simplify daily development and improve development efficiency through various small functions. Currently, the following functions have been provided, and other functions will be added later:
-
+	<description>
+		<![CDATA[
+		This is a plugin integrating various small tools, which aims to simplify daily development and improve development efficiency through various small functions. Currently, the following functions have been provided, and other functions will be added later:
+		<br>
 		1. Enhanced copy function. It can copy the fully qualified class name of the current class, JSON Schema information, enumeration class description information, and JSON string of the current class (generated using the default value) in one click.
-
+		<br>
 		2. Simplify the creation of test classes. Support the rapid creation of test methods for the specified methods of the current class.
-
+		<br>
 		3. String processing. Quickly convert the currently selected string, support case conversion and naming method conversion.
-
+    ]]>
 	</description>
+	<change-notes>
+		<![CDATA[
+      <ul>
+        <li><b>1.1.0</b> Added the function of selecting string processing, support case conversion and naming method conversion.</li>
+        <li><b>1.0.2</b> Support the rapid creation of test methods for the specified methods of the current class.</li>
+        <li><b>1.0.1</b> Support for generating JSON strings for the current class using default values.</li>
+        <li><b>1.0.0</b> Supports copying the current class JSON schema</li>
+      </ul>
+    ]]>
+	</change-notes>
+
 	<version>2023.2.23</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
