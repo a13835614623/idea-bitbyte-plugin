@@ -66,8 +66,8 @@
 		</intentionAction>
 	</extensions>
 	<actions>
-		<action id="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"
-				class="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.bitbyte.CopyJsonSchemaAction"
+				class="com.zzk.idea.bitbyte.action.copy.jsonschema.CopyJsonSchemaAction"
 				text="Copy Json Schema" description="Copy json schema">
 			<add-to-group group-id="Copy.Paste.Special" anchor="first"/>
 		</action>
@@ -75,7 +75,7 @@
 				class="com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumDescAction"
 				text="Copy Enum Description" description="Copy enum description">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
-						  relative-to-action="com.zzk.idea.bitbyte.action.copy.bitbyte.CopybitbyteAction"/>
+						  relative-to-action="com.zzk.idea.bitbyte.action.copy.bitbyte.CopyJsonSchemaAction"/>
 		</action>
 		<action id="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
 				class="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
