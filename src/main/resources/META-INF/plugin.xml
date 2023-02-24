@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
 	<!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
-	<id>com.zzk.JsonSchema</id>
+	<id>com.zzk.BitByte</id>
 
 	<!-- Public plugin name should be written in Title Case.
 		 Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
@@ -44,47 +44,47 @@
 	<!-- Extension points defined by the plugin.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
 	<extensions defaultExtensionNs="com.intellij">
-		<applicationConfigurable parentId="tools" instance="com.zzk.idea.jsonschema.settings.AppSettingsConfigurable"
-								 id="com.zzk.idea.jsonschema.settings.AppSettingsConfigurable"
+		<applicationConfigurable parentId="tools" instance="com.zzk.idea.bitbyte.settings.AppSettingsConfigurable"
+								 id="com.zzk.idea.bitbyte.settings.AppSettingsConfigurable"
 								 displayName="Copy Json Schema"/>
-		<applicationService serviceImplementation="com.zzk.idea.jsonschema.settings.AppSettingsState"/>
+		<applicationService serviceImplementation="com.zzk.idea.bitbyte.settings.AppSettingsState"/>
 		<!--		<toolWindow id="Code Function Result" secondary="true" icon="AllIcons.General.Modified" anchor="right"-->
 		<!--					factoryClass="com.zzk.idea.jsonschema.ui.MyToolWindowFactory"/>-->
 		<codeInsight.lineMarkerProvider language="JAVA"
-										implementationClass="com.zzk.idea.jsonschema.action.linemarker.CreateTestLineMarkerProvider"/>
+										implementationClass="com.zzk.idea.bitbyte.action.linemarker.CreateTestLineMarkerProvider"/>
 		<intentionAction>
-			<className>com.zzk.idea.jsonschema.action.text.SelectedText2UnderlineUpperCaseAction</className>
+			<className>com.zzk.idea.bitbyte.action.text.SelectedText2UnderlineUpperCaseAction</className>
 		</intentionAction>
 		<intentionAction>
-			<className>com.zzk.idea.jsonschema.action.text.SelectedText2UnderlineLowerCaseAction</className>
+			<className>com.zzk.idea.bitbyte.action.text.SelectedText2UnderlineLowerCaseAction</className>
 		</intentionAction>
 		<intentionAction>
-			<className>com.zzk.idea.jsonschema.action.text.SelectedText2LowerCaseAction</className>
+			<className>com.zzk.idea.bitbyte.action.text.SelectedText2LowerCaseAction</className>
 		</intentionAction>
 		<intentionAction>
-			<className>com.zzk.idea.jsonschema.action.text.SelectedText2UpperCaseAction</className>
+			<className>com.zzk.idea.bitbyte.action.text.SelectedText2UpperCaseAction</className>
 		</intentionAction>
 	</extensions>
 	<actions>
-		<action id="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"
-				class="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.jsonschema.CopyJsonSchemaAction"
+				class="com.zzk.idea.bitbyte.action.copy.jsonschema.CopyJsonSchemaAction"
 				text="Copy Json Schema" description="Copy json schema">
 			<add-to-group group-id="Copy.Paste.Special" anchor="first"/>
 		</action>
-		<action id="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"
-				class="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumDescAction"
+				class="com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumDescAction"
 				text="Copy Enum Description" description="Copy enum description">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.jsonschema.action.copy.jsonschema.CopyJsonSchemaAction"/>
 		</action>
-		<action id="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"
-				class="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
+				class="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"
 				text="Copy Class Name With Package" description="Copy class name with package">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.jsonschema.action.copy.enumdesc.CopyEnumDescAction"/>
 		</action>
-		<action id="com.zzk.idea.jsonschema.action.copy.json.CopyJsonWithDefaultValueAction"
-				class="com.zzk.idea.jsonschema.action.copy.json.CopyJsonWithDefaultValueAction"
+		<action id="com.zzk.idea.bitbyte.action.copy.json.CopyJsonWithDefaultValueAction"
+				class="com.zzk.idea.bitbyte.action.copy.json.CopyJsonWithDefaultValueAction"
 				text="Copy Json With Default Value" description="Copy json with default value">
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.jsonschema.action.copy.classname.CopyClassNameAction"/>
