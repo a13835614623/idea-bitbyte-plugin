@@ -1,10 +1,13 @@
 package com.zzk.idea.bitbyte.constants;
 
-import com.intellij.psi.*;
-import com.zzk.idea.bitbyte.util.PsiUtil;
-
 import java.util.Optional;
 import java.util.function.Function;
+
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiEnumConstant;
+import com.intellij.psi.PsiExpressionList;
+import com.intellij.psi.PsiField;
+import com.zzk.idea.bitbyte.util.PsiUtil;
 
 /**
  * 枚举参数类型
@@ -13,7 +16,7 @@ import java.util.function.Function;
  * @date 2023/01/13
  */
 public enum EnumParamType {
-    COMMENT("comment", PsiUtil::getComment),
+    COMMENT("Enum Comment", PsiUtil::getComment),
     NAME("Enum Name", PsiField::getName),
     PARAM_1("Enum Param 1", 1),
     PARAM_2("Enum Param 2", 2),
