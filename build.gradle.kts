@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.zzk"
-version = "1.1.1"
+version = "1.1.2"
 
 repositories {
     maven {
@@ -34,7 +34,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("212")
-        untilBuild.set("223.*")
+        untilBuild.set("232.*")
     }
 
     signPlugin {
