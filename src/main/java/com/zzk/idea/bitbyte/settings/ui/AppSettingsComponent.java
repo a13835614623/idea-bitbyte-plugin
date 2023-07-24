@@ -1,5 +1,6 @@
-package com.zzk.idea.bitbyte.settings;
+package com.zzk.idea.bitbyte.settings.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,6 +17,8 @@ import com.intellij.ui.components.panels.HorizontalBox;
 import com.intellij.util.ui.FormBuilder;
 import com.zzk.idea.bitbyte.constants.EnumParamType;
 import com.zzk.idea.bitbyte.constants.UIMessage;
+import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
+import com.zzk.idea.bitbyte.settings.CreateTestMethodState;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,6 +32,7 @@ public class AppSettingsComponent {
 	private final JComboBox<EnumParamType> paramTypeJComboBox1 = new ComboBox<>(new DefaultComboBoxModel<>(EnumParamType.values()));
 	private final JComboBox<EnumParamType> paramTypeJComboBox2 = new ComboBox<>(new DefaultComboBoxModel<>(EnumParamType.values()));
 	private final JBTextField chatGptTokenText = new JBTextField();
+	private final CreateTestConfigMethodPanel createTestConfigMethodPanel = new CreateTestConfigMethodPanel();
 
 	public AppSettingsComponent() {
 		HorizontalBox horizontalBox = new HorizontalBox();
@@ -39,6 +43,7 @@ public class AppSettingsComponent {
 				.addLabeledComponent(UIMessage.ENUM_DESCRIPTION_SEPARATOR.label(), enumDescSplitText, 1, false)
 				.addLabeledComponent(UIMessage.ENUM_PARAMETER_SEPARATOR.label(), enumParamSplitText, 1, false)
 				.addLabeledComponent(UIMessage.PARAM.label(), horizontalBox, 1)
+				.addLabeledComponent(UIMessage.CREATE_TEST_METHOD.label(), createTestConfigMethodPanel, 1)
 				// .addLabeledComponent(new JBLabel("ChatGPT token"), chatGptTokenText, 1,false)
 				.addComponentFillVertically(new JPanel(), 0)
 				.getPanel();
@@ -87,11 +92,28 @@ public class AppSettingsComponent {
 				.collect(Collectors.toList());
 	}
 
-	public void setChatGptToken(String token){
+	public void setChatGptToken(String token) {
 		chatGptTokenText.setText(token);
 	}
 
-	public String getChatGptToken(){
+	public String getChatGptToken() {
 		return chatGptTokenText.getText();
+	}
+
+	public void setCreateTestMethodState(CreateTestMethodState createTestMethodState) {
+		Object[][] data = createTestMethodState.getItems()
+				.stream().map(item -> new Object[] {item.getProjectName(), item.getModuleName()})
+				.toArray(Object[][]::new);
+		createTestConfigMethodPanel.setTableData(data);
+	}
+
+	public List<CreateTestMethodConfigItem> getCreateTestMethodConfigItems() {
+		Object[][] tableData = createTestConfigMethodPanel.getTableData();
+		List<CreateTestMethodConfigItem> items = new ArrayList<>();
+		for (Object[] row : tableData) {
+			CreateTestMethodConfigItem item = new CreateTestMethodConfigItem((String) row[0], (String) row[1]);
+			items.add(item);
+		}
+		return items;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -67,6 +68,8 @@ import com.intellij.testIntegration.createTest.JavaTestGenerator;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import com.zzk.idea.bitbyte.constants.Message;
+import com.zzk.idea.bitbyte.settings.AppSettingsState;
+import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
 import com.zzk.idea.bitbyte.util.PsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -245,7 +248,19 @@ public class CreateTestMethodAction extends AnAction {
 
     @NotNull
     public static Module suggestModuleForTests(@NotNull Project project, @NotNull Module productionModule) {
-        for (Module module : ModuleManager.getInstance(project).getModules()) {
+        Module[] projectModules = ModuleManager.getInstance(project).getModules();
+        List<CreateTestMethodConfigItem> items = AppSettingsState.getInstance().getCreateTestMethodState().getItems();
+        Optional<Module> selectModule = items.stream()
+                .filter(x -> Objects.equals(x.getProjectName(), project.getName()))
+                .findFirst()
+                .map(CreateTestMethodConfigItem::getModuleName)
+                .flatMap(x -> Arrays.stream(projectModules).filter(pm -> Objects.equals(pm.getName(), x)).findFirst());
+        return selectModule
+                .orElseGet(() -> defaultSelectModule(productionModule, projectModules));
+    }
+
+    private static Module defaultSelectModule(@NotNull Module productionModule, Module[] projectModules) {
+        for (Module module : projectModules) {
             if (productionModule.equals(TestModuleProperties.getInstance(module).getProductionModule())) {
                 return module;
             }
@@ -259,7 +274,9 @@ public class CreateTestMethodAction extends AnAction {
                     .filter(module -> !computeSuitableTestRootUrls(module).isEmpty())
                     .limit(2)
                     .collect(Collectors.toList());
-            if (modulesWithTestRoot.size() == 1) return modulesWithTestRoot.get(0);
+            if (modulesWithTestRoot.size() == 1) {
+                return modulesWithTestRoot.get(0);
+            }
         }
 
         return productionModule;

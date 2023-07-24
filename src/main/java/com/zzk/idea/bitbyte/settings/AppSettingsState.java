@@ -26,7 +26,15 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
    */
   private final CopyEnumState copyEnumState = CopyEnumState.defaultVal();
 
+  /**
+   * 代码优化参数
+   */
   private final CodeOptimizationState codeOptimizationState = CodeOptimizationState.defaultVal();
+
+  /**
+   * 创建测试方法参数
+   */
+  private final CreateTestMethodState createTestMethodState = CreateTestMethodState.defaultVal();
 
   public CopyEnumState getCopyEnumState() {
     return copyEnumState;
@@ -34,6 +42,10 @@ public class AppSettingsState implements PersistentStateComponent<AppSettingsSta
 
   public CodeOptimizationState getCodeOptimizationState() {
     return codeOptimizationState;
+  }
+
+  public CreateTestMethodState getCreateTestMethodState() {
+    return createTestMethodState;
   }
 
   public static AppSettingsState getInstance() {

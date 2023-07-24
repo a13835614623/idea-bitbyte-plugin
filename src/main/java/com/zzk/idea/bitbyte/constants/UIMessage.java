@@ -4,6 +4,7 @@ import com.intellij.ui.components.JBLabel;
 
 /**
  * UILabel
+ *
  * @author 张子宽
  * @date 2023/02/22
  */
@@ -12,9 +13,8 @@ public enum UIMessage {
     COPY_SETTING("Copy Setting"),
     ENUM_DESCRIPTION_SEPARATOR("Enum description separator"),
     ENUM_PARAMETER_SEPARATOR("Enum parameter separator"),
-    PARAM("Param")
-
-    ;
+    PARAM("Param"),
+    CREATE_TEST_METHOD("Create test method");
 
 
     private final String text;
