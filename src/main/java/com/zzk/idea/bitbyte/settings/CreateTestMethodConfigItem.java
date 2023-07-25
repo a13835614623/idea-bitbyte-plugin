@@ -8,12 +8,12 @@ package com.zzk.idea.bitbyte.settings;
  */
 public class CreateTestMethodConfigItem {
     private String projectName;
-    private String moduleName;
 
-    public CreateTestMethodConfigItem(String projectName, String moduleName) {
-        this.projectName = projectName;
-        this.moduleName = moduleName;
-    }
+    private String testModuleName;
+
+    private Boolean enableUnitTest;
+
+    private Boolean enableIntegrationTest;
 
     public String getProjectName() {
         return projectName;
@@ -23,11 +23,30 @@ public class CreateTestMethodConfigItem {
         this.projectName = projectName;
     }
 
-    public String getModuleName() {
-        return moduleName;
+    public String getTestModuleName() {
+        return testModuleName;
     }
 
-    public void setModuleName(String moduleName) {
-        this.moduleName = moduleName;
+    public CreateTestMethodConfigItem setTestModuleName(String testModuleName) {
+        this.testModuleName = testModuleName;
+        return this;
+    }
+
+    public Boolean getEnableUnitTest() {
+        return enableUnitTest;
+    }
+
+    public CreateTestMethodConfigItem setEnableUnitTest(Boolean enableUnitTest) {
+        this.enableUnitTest = enableUnitTest;
+        return this;
+    }
+
+    public Boolean getEnableIntegrationTest() {
+        return enableIntegrationTest;
+    }
+
+    public CreateTestMethodConfigItem setEnableIntegrationTest(Boolean enableIntegrationTest) {
+        this.enableIntegrationTest = enableIntegrationTest;
+        return this;
     }
 }

@@ -1,6 +1,5 @@
 package com.zzk.idea.bitbyte.settings.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -101,19 +100,10 @@ public class AppSettingsComponent {
 	}
 
 	public void setCreateTestMethodState(CreateTestMethodState createTestMethodState) {
-		Object[][] data = createTestMethodState.getItems()
-				.stream().map(item -> new Object[] {item.getProjectName(), item.getModuleName()})
-				.toArray(Object[][]::new);
-		createTestConfigMethodPanel.setTableData(data);
+		createTestConfigMethodPanel.setItems(createTestMethodState.getItems());
 	}
 
 	public List<CreateTestMethodConfigItem> getCreateTestMethodConfigItems() {
-		Object[][] tableData = createTestConfigMethodPanel.getTableData();
-		List<CreateTestMethodConfigItem> items = new ArrayList<>();
-		for (Object[] row : tableData) {
-			CreateTestMethodConfigItem item = new CreateTestMethodConfigItem((String) row[0], (String) row[1]);
-			items.add(item);
-		}
-		return items;
+		return createTestConfigMethodPanel.getItems();
 	}
 }

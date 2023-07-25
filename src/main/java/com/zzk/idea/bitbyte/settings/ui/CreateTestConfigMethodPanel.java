@@ -2,6 +2,9 @@ package com.zzk.idea.bitbyte.settings.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.table.JBTable;
 import com.zzk.idea.bitbyte.settings.AppSettingsState;
+import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodState;
 
 /**
@@ -23,17 +27,22 @@ public class CreateTestConfigMethodPanel extends JPanel {
     private JBTable table;
     private final DefaultTableModel tableModel;
 
+    private static final String[] COLUMN_NAMES = new String[] {"Project Name", "Test Module Name", "Unit Test", "Integration Test"};
+
     public CreateTestConfigMethodPanel() {
         setLayout(new BorderLayout());
 
-        String[] columnNames = {"Project Name", "Module Name"};
-
         CreateTestMethodState createTestMethodState = AppSettingsState.getInstance().getCreateTestMethodState();
         Object[][] data = createTestMethodState.getItems()
-                .stream().map(item -> new Object[] {item.getProjectName(), item.getModuleName()})
+                .stream().map(item -> new Object[] {item.getProjectName(), item.getTestModuleName()})
                 .toArray(Object[][]::new);
 
-        tableModel = new DefaultTableModel(data, columnNames);
+        tableModel = new DefaultTableModel(data, COLUMN_NAMES) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         table = new JBTable(tableModel);
         table.setFillsViewportHeight(true);
         // 设置表格的默认大小
@@ -64,7 +73,7 @@ public class CreateTestConfigMethodPanel extends JPanel {
     }
 
     public void setTableData(Object[][] data) {
-        tableModel.setDataVector(data, new Object[] {"Project", "Module"});
+        tableModel.setDataVector(data, COLUMN_NAMES);
     }
 
     public Object[][] getTableData() {
@@ -75,5 +84,31 @@ public class CreateTestConfigMethodPanel extends JPanel {
             }
         }
         return data;
+    }
+
+    public void setItems(List<CreateTestMethodConfigItem> items) {
+        Object[][] data = items.stream().map(x -> new Object[] {
+                x.getProjectName(),
+                x.getTestModuleName(),
+                x.getEnableUnitTest(),
+                x.getEnableIntegrationTest()
+        }).toArray(Object[][]::new);
+        setTableData(data);
+    }
+
+    public List<CreateTestMethodConfigItem> getItems() {
+        return Arrays.stream(getTableData())
+                .map(CreateTestConfigMethodPanel::toCreateTestMethodConfigItem)
+                .collect(Collectors.toList());
+    }
+
+
+    public static CreateTestMethodConfigItem toCreateTestMethodConfigItem(Object[] row) {
+        CreateTestMethodConfigItem item = new CreateTestMethodConfigItem();
+        item.setProjectName((String) row[0]);
+        item.setTestModuleName((String) row[1]);
+        item.setEnableUnitTest((Boolean) row[2]);
+        item.setEnableIntegrationTest((Boolean) row[3]);
+        return item;
     }
 }

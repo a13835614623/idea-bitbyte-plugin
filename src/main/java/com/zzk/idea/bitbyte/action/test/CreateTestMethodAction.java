@@ -71,6 +71,7 @@ import com.zzk.idea.bitbyte.constants.Message;
 import com.zzk.idea.bitbyte.constants.TestActionType;
 import com.zzk.idea.bitbyte.settings.AppSettingsState;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
+import com.zzk.idea.bitbyte.settings.CreateTestMethodState;
 import com.zzk.idea.bitbyte.util.PsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -112,7 +113,7 @@ public class CreateTestMethodAction extends AnAction {
         PsiFile containingFile = srcMethod.getFirstChild().getContainingFile();
         VirtualFile virtualFile = containingFile.getVirtualFile();
         PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
-        Module srcModule = ModuleUtilCore.findModuleForFile(virtualFile,project);
+        Module srcModule = ModuleUtilCore.findModuleForFile(virtualFile, project);
         if (srcModule == null) {
             Message.NOT_FOUND_SRC_MODULE.showErrorDialog();
             return;
@@ -148,7 +149,7 @@ public class CreateTestMethodAction extends AnAction {
 //            addSuperClass(testClass, project, superClassName);
 //        }
         PsiFile file = testClass.getContainingFile();
-        WriteCommandAction.runWriteCommandAction(project,()->{
+        WriteCommandAction.runWriteCommandAction(project, () -> {
             JavaTestGenerator.addTestMethods(CodeInsightUtil.positionCursorAtLBrace(project, file, testClass),
                     testClass,
                     srcClass,
@@ -262,17 +263,23 @@ public class CreateTestMethodAction extends AnAction {
                 .filter(forGeneratedSources.negate());
     }
 
-    @NotNull
-    public static Module suggestModuleForTests(@NotNull Project project, @NotNull Module productionModule) {
+    public Module suggestModuleForTests(@NotNull Project project, @NotNull Module productionModule) {
         Module[] projectModules = ModuleManager.getInstance(project).getModules();
-        List<CreateTestMethodConfigItem> items = AppSettingsState.getInstance().getCreateTestMethodState().getItems();
+        CreateTestMethodState createTestMethodState = AppSettingsState.getInstance().getCreateTestMethodState();
+        List<CreateTestMethodConfigItem> items = createTestMethodState.getItems();
         Optional<Module> selectModule = items.stream()
+                .filter(x -> isEnableConfigItem(x))
                 .filter(x -> Objects.equals(x.getProjectName(), project.getName()))
                 .findFirst()
-                .map(CreateTestMethodConfigItem::getModuleName)
+                .map(CreateTestMethodConfigItem::getTestModuleName)
                 .flatMap(x -> Arrays.stream(projectModules).filter(pm -> Objects.equals(pm.getName(), x)).findFirst());
         return selectModule
                 .orElseGet(() -> defaultSelectModule(productionModule, projectModules));
+    }
+
+    private boolean isEnableConfigItem(CreateTestMethodConfigItem x) {
+        return x.getEnableUnitTest() && TestActionType.UNIT_TEST == testActionType ||
+                x.getEnableIntegrationTest() && TestActionType.INTEGRATION_TEST == testActionType;
     }
 
     private static Module defaultSelectModule(@NotNull Module productionModule, Module[] projectModules) {
