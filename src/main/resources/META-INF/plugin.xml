@@ -27,6 +27,8 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+        <li><b>1.2.0</b> Added support for custom creation of unit tests or integration tests. Click the icon on the left side of any function to use it. </li>
+        <li><b>1.1.2</b> Rebuild with the latest version of idea. </li>
         <li><b>1.1.1</b> Supplemental plugin description copy and changelog.</li>
         <li><b>1.1.0</b> Added the function of selecting string processing, support case conversion and naming method conversion.</li>
         <li><b>1.0.2</b> Support the rapid creation of test methods for the specified methods of the current class.</li>
@@ -36,7 +38,7 @@
     ]]>
 	</change-notes>
 
-	<version>2023.7.23</version>
+	<version>2023.7.25</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
