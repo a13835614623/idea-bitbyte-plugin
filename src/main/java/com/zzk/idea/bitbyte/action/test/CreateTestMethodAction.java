@@ -68,6 +68,7 @@ import com.intellij.testIntegration.createTest.JavaTestGenerator;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import com.zzk.idea.bitbyte.constants.Message;
+import com.zzk.idea.bitbyte.constants.TestActionType;
 import com.zzk.idea.bitbyte.settings.AppSettingsState;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
 import com.zzk.idea.bitbyte.util.PsiUtil;
@@ -75,16 +76,33 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
 
+/**
+ * CreateTestMethodAction
+ *
+ * @author 张子宽
+ * @date 2023/07/25
+ */
+@SuppressWarnings("ALL")
 public class CreateTestMethodAction extends AnAction {
 
-
+    /**
+     * 方法
+     */
     private final PsiMethod srcMethod;
-
+    /**
+     * 测试框架
+     */
     private final TestFramework testFramework;
+    /**
+     * 类名后缀
+     */
+    private final TestActionType testActionType;
 
-    public CreateTestMethodAction(PsiMethod psiMethod, TestFramework testFramework) {
+    public CreateTestMethodAction(PsiMethod psiMethod, TestFramework testFramework, TestActionType testActionType) {
         this.srcMethod = psiMethod;
         this.testFramework = testFramework;
+        this.testActionType = testActionType;
+        getTemplatePresentation().setText(testActionType.getCreateText());
     }
 
     @Override
@@ -125,8 +143,7 @@ public class CreateTestMethodAction extends AnAction {
             Message.TEST_CLASS_CREATE_FAIL.showErrorDialog();
             return;
         }
-//        final String defaultSuperClass = testFramework.getDefaultSuperClass();
-//        final String superClassName = d.getSuperClassName();
+        // todo 后续支持设置自定义父类
 //        if (!Comparing.strEqual(superClassName, defaultSuperClass)) {
 //            addSuperClass(testClass, project, superClassName);
 //        }
@@ -212,7 +229,6 @@ public class CreateTestMethodAction extends AnAction {
         }
         return JavaDirectoryService.getInstance().createClass(targetDirectory, testClassName);
     }
-
 
     private static PsiClass createTestClassFromCodeTemplate(PsiClass srcClass, String className,
             FileTemplateDescriptor fileTemplateDescriptor,
@@ -387,11 +403,10 @@ public class CreateTestMethodAction extends AnAction {
                 .findFirst().orElse(null);
     }
 
-    public static String suggestTestClassName(PsiClass targetClass) {
+    public String suggestTestClassName(PsiClass targetClass) {
         JavaCodeStyleSettings customSettings = JavaCodeStyleSettings.getInstance(targetClass.getContainingFile());
         String prefix = customSettings.TEST_NAME_PREFIX;
-        String suffix = customSettings.TEST_NAME_SUFFIX;
-        return prefix + targetClass.getName() + suffix;
+        return prefix + targetClass.getName() + testActionType.getDefaultSuffix();
     }
 
 }

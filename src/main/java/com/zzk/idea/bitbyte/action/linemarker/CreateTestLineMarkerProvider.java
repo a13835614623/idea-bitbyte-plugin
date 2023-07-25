@@ -5,7 +5,9 @@ import java.util.Optional;
 import com.intellij.codeInsight.daemon.GutterName;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
+import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiIdentifier;
@@ -13,11 +15,18 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.testIntegration.TestFramework;
 import com.intellij.testIntegration.TestIntegrationUtils;
 import com.intellij.util.FunctionUtil;
-import com.zzk.idea.bitbyte.action.test.CreateTestMethodAction;
+import com.zzk.idea.bitbyte.action.test.CreateIntegrationTestMethodAction;
+import com.zzk.idea.bitbyte.action.test.CreateUnitTestMethodAction;
 import com.zzk.idea.bitbyte.constants.Message;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * CreateTestLineMarkerProvider
+ *
+ * @author 张子宽
+ * @date 2023/07/25
+ */
 public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
 
     @Override
@@ -36,7 +45,14 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
         if (testFramework.isEmpty()) {
             return null;
         }
-        return new ToTestMarkerInfo(element, ((PsiMethod) parent), testFramework.orElseThrow());
+        TestFramework framework = testFramework.get();
+        PsiMethod method = (PsiMethod) parent;
+
+        DefaultActionGroup myActionGroup = new DefaultActionGroup(
+                new CreateUnitTestMethodAction(method, framework),
+                new CreateIntegrationTestMethodAction(method, framework)
+        );
+        return new ToTestMarkerInfo(element, framework, myActionGroup);
     }
 
 
@@ -47,28 +63,35 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
 
     private static final class ToTestMarkerInfo extends LineMarkerInfo<PsiElement> {
 
-        private final PsiMethod psiMethod;
+        private final DefaultActionGroup myActionGroup;
 
-        private final TestFramework testFramework;
-
-        private ToTestMarkerInfo(@NotNull PsiElement psiElement, PsiMethod psiMethod, TestFramework testFramework) {
+        private ToTestMarkerInfo(@NotNull PsiElement psiElement, TestFramework testFramework, DefaultActionGroup myActionGroup) {
             super(psiElement, psiElement.getTextRange(), testFramework.getIcon(),
                     FunctionUtil.constant(Message.GENERATE_TEST_METHOD.message()),
-                    (e, elt) -> {},
+                    (e, elt) -> {
+                    },
                     GutterIconRenderer.Alignment.RIGHT);
-            this.psiMethod = psiMethod;
-            this.testFramework = testFramework;
+            this.myActionGroup = myActionGroup;
         }
 
         @Override
         public GutterIconRenderer createGutterRenderer() {
-            if (myIcon == null) return null;
+            if (myIcon == null) {
+                return null;
+            }
             return new LineMarkerGutterIconRenderer<>(this) {
                 @Override
                 public AnAction getClickAction() {
-                    return new CreateTestMethodAction(psiMethod,testFramework);
+                    return null;
+                }
+
+
+                @Override
+                public ActionGroup getPopupMenuActions() {
+                    return myActionGroup;
                 }
             };
         }
     }
+
 }
