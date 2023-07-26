@@ -48,11 +48,7 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
         TestFramework framework = testFramework.get();
         PsiMethod method = (PsiMethod) parent;
 
-        DefaultActionGroup myActionGroup = new DefaultActionGroup(
-                new CreateUnitTestMethodAction(method, framework),
-                new CreateIntegrationTestMethodAction(method, framework)
-        );
-        return new ToTestMarkerInfo(element, framework, myActionGroup);
+        return new ToTestMarkerInfo(element, framework, method);
     }
 
 
@@ -63,15 +59,18 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
 
     private static final class ToTestMarkerInfo extends LineMarkerInfo<PsiElement> {
 
-        private final DefaultActionGroup myActionGroup;
+        private final PsiMethod method;
 
-        private ToTestMarkerInfo(@NotNull PsiElement psiElement, TestFramework testFramework, DefaultActionGroup myActionGroup) {
+        private final TestFramework testFramework;
+
+        private ToTestMarkerInfo(@NotNull PsiElement psiElement, TestFramework testFramework, PsiMethod method) {
             super(psiElement, psiElement.getTextRange(), testFramework.getIcon(),
                     FunctionUtil.constant(Message.GENERATE_TEST_METHOD.message()),
                     (e, elt) -> {
                     },
                     GutterIconRenderer.Alignment.RIGHT);
-            this.myActionGroup = myActionGroup;
+            this.method = method;
+            this.testFramework = testFramework;
         }
 
         @Override
@@ -88,7 +87,10 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
 
                 @Override
                 public ActionGroup getPopupMenuActions() {
-                    return myActionGroup;
+                    return new DefaultActionGroup(
+                            new CreateUnitTestMethodAction(method, testFramework),
+                            new CreateIntegrationTestMethodAction(method, testFramework)
+                    );
                 }
             };
         }

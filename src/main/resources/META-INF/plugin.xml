@@ -92,6 +92,20 @@
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"/>
 		</action>
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
+				text="Create Unit Test" description="Create unit test">
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
+		</action>
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
+				text="Create Integration Test" description="Create integration test">
+			<add-to-group group-id="EditorPopupMenu"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
+						  anchor="after"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
+		</action>
 
 		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
 		<!--			   class="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
