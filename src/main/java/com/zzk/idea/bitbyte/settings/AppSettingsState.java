@@ -2,6 +2,7 @@ package com.zzk.idea.bitbyte.settings;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.RoamingType;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -16,25 +17,25 @@ import org.jetbrains.annotations.Nullable;
  * these persistent application settings are stored.
  */
 @State(
-        name = "org.intellij.sdk.settings.AppSettingsState",
-        storages = @Storage("SdkSettingsPlugin.xml")
+        name = "com.zzk.idea.bitbyte.settings.AppSettingsState",
+        storages = @Storage(value = "BitByteConfig.xml", roamingType = RoamingType.PER_OS)
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
 
   /**
    * 复制枚举参数
    */
-  private final CopyEnumState copyEnumState = CopyEnumState.defaultVal();
+  public CopyEnumState copyEnumState = CopyEnumState.defaultVal();
 
   /**
    * 代码优化参数
    */
-  private final CodeOptimizationState codeOptimizationState = CodeOptimizationState.defaultVal();
+  public CodeOptimizationState codeOptimizationState = CodeOptimizationState.defaultVal();
 
   /**
    * 创建测试方法参数
    */
-  private final CreateTestMethodState createTestMethodState = CreateTestMethodState.defaultVal();
+  public CreateTestMethodState createTestMethodState = CreateTestMethodState.defaultVal();
 
   public CopyEnumState getCopyEnumState() {
     return copyEnumState;
