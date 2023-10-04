@@ -3,6 +3,9 @@ package com.zzk.idea.bitbyte.settings;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Data;
+
+@Data
 public class CreateTestMethodState {
 
     private List<CreateTestMethodConfigItem> items = new ArrayList<>();
@@ -11,11 +14,4 @@ public class CreateTestMethodState {
         return new CreateTestMethodState();
     }
 
-    public List<CreateTestMethodConfigItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<CreateTestMethodConfigItem> items) {
-        this.items = items;
-    }
 }

@@ -84,12 +84,16 @@ import org.jetbrains.jps.model.java.JavaSourceRootType;
  * @date 2023/07/25
  */
 @SuppressWarnings("ALL")
-public class CreateTestMethodAction extends AnAction {
+public class BaseCreateTestAction extends AnAction {
 
+    /**
+     * 类
+     */
+    private final PsiClass psiClass;
     /**
      * 方法
      */
-    private final PsiMethod srcMethod;
+    private final List<PsiMethod> methods;
     /**
      * 测试框架
      */
@@ -99,8 +103,17 @@ public class CreateTestMethodAction extends AnAction {
      */
     private final TestActionType testActionType;
 
-    public CreateTestMethodAction(PsiMethod psiMethod, TestFramework testFramework, TestActionType testActionType) {
-        this.srcMethod = psiMethod;
+    public BaseCreateTestAction(PsiMethod psiMethod, TestFramework testFramework, TestActionType testActionType) {
+        this.methods = List.of(psiMethod);
+        this.psiClass = psiMethod.getContainingClass();
+        this.testFramework = testFramework;
+        this.testActionType = testActionType;
+        getTemplatePresentation().setText(testActionType.getCreateText());
+    }
+
+    public BaseCreateTestAction(PsiClass psiClass, List<PsiMethod> methods, TestFramework testFramework, TestActionType testActionType) {
+        this.psiClass = psiClass;
+        this.methods = methods;
         this.testFramework = testFramework;
         this.testActionType = testActionType;
         getTemplatePresentation().setText(testActionType.getCreateText());
@@ -108,11 +121,9 @@ public class CreateTestMethodAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
-        PsiElement element = srcMethod;
         Project project = e.getRequiredData(CommonDataKeys.PROJECT);
-        PsiFile containingFile = srcMethod.getFirstChild().getContainingFile();
-        VirtualFile virtualFile = containingFile.getVirtualFile();
-        PsiDirectory srcDir = element.getContainingFile().getContainingDirectory();
+        VirtualFile virtualFile = psiClass.getContainingFile().getVirtualFile();
+        PsiDirectory srcDir = psiClass.getContainingFile().getContainingDirectory();
         Module srcModule = ModuleUtilCore.findModuleForFile(virtualFile, project);
         if (srcModule == null) {
             Message.NOT_FOUND_SRC_MODULE.showErrorDialog();
@@ -154,7 +165,7 @@ public class CreateTestMethodAction extends AnAction {
                     testClass,
                     srcClass,
                     testFramework,
-                    List.of(new MemberInfo(srcMethod)),
+                    methods.stream().map(MemberInfo::new).collect(Collectors.toList()),
                     false,
                     false);
             writeTestCode(file);
@@ -363,7 +374,7 @@ public class CreateTestMethodAction extends AnAction {
         final HashSet<Module> modules = new HashSet<>();
         ModuleUtilCore.collectModulesDependsOn(mainModule, modules);
         return modules.stream()
-                .flatMap(CreateTestMethodAction::suitableTestSourceFolders)
+                .flatMap(BaseCreateTestAction::suitableTestSourceFolders)
                 .map(SourceFolder::getFile)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

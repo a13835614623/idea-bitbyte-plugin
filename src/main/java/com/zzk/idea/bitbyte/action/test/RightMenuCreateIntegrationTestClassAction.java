@@ -8,8 +8,8 @@ import com.zzk.idea.bitbyte.constants.TestActionType;
  * @author 张子宽
  * @date 2023/07/26
  */
-public class RightMenuCreateIntegrationTestMethodAction extends BaseRightMenuCreateTestMethodAction {
-    public RightMenuCreateIntegrationTestMethodAction() {
+public class RightMenuCreateIntegrationTestClassAction extends BaseRightMenuCreateTestClassAction {
+    public RightMenuCreateIntegrationTestClassAction() {
         super(TestActionType.INTEGRATION_TEST);
     }
 }

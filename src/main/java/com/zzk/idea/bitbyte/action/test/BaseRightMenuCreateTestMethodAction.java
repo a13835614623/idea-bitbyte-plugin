@@ -14,12 +14,12 @@ import com.intellij.testIntegration.TestFramework;
 import com.zzk.idea.bitbyte.constants.TestActionType;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class RightMenuCreateTestMethodAction extends AnAction {
+public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
 
     private final TestActionType testActionType;
 
 
-    public RightMenuCreateTestMethodAction(TestActionType testActionType) {
+    public BaseRightMenuCreateTestMethodAction(TestActionType testActionType) {
         this.testActionType = testActionType;
     }
 
@@ -40,7 +40,7 @@ public abstract class RightMenuCreateTestMethodAction extends AnAction {
                 .filter(x -> "JUnit5".equalsIgnoreCase(x.getName()))
                 .findFirst()
                 .ifPresent(framework -> {
-                    new CreateTestMethodAction(containingMethod, framework, testActionType).actionPerformed(event);
+                    new BaseCreateTestAction(containingMethod, framework, testActionType).actionPerformed(event);
                 });
     }
 

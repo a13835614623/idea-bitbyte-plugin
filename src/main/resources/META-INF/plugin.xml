@@ -27,6 +27,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+	    <li><b>1.2.3</b> Right-click menu support for creating test classes when right-clicking in Java classes. </li>
 	    <li><b>1.2.2</b> Fix the problem that configuration parameters will be lost after restarting IDEA. </li>
         <li><b>1.2.1</b> Support for creating tests in the right-click menu and generate secondary menu. </li>
         <li><b>1.2.0</b> Added support for custom creation of unit tests or integration tests. Click the icon on the left side of any function to use it. </li>
@@ -40,7 +41,7 @@
     ]]>
 	</change-notes>
 
-	<version>2023.8.24</version>
+	<version>2023.10.04</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
@@ -94,19 +95,41 @@
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"/>
 		</action>
-		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
-				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
-				text="Create Unit Test" description="Create unit test">
+		<!--  单元测试类  -->
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
+				text="Create Unit Test Class" description="Create unit test Class">
 			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
 			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
 		</action>
+		<!--  集成测试类  -->
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
+				text="Create Integration Test Class" description="Create integration test Class">
+			<add-to-group group-id="EditorPopupMenu" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
+		</action>
+
+		<!--  单元测试方法  -->
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
+				text="Create Unit Test" description="Create unit test">
+			<add-to-group group-id="EditorPopupMenu" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>
+		</action>
+		<!--  集成测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
 				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
 				text="Create Integration Test" description="Create integration test">
 			<add-to-group group-id="EditorPopupMenu"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
 						  anchor="after"/>
-			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"/>
 		</action>
 
 		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->

@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.zzk"
-version = "1.2.2"
+version = "1.2.3"
 
 repositories {
     maven {
@@ -16,6 +16,8 @@ dependencies{
     implementation("com.alibaba:fastjson:1.2.83")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
+    compileOnly("org.projectlombok:lombok:1.18.24")
+    annotationProcessor("org.projectlombok:lombok:1.18.24")
 }
 
 // Configure Gradle IntelliJ Plugin
