@@ -42,7 +42,8 @@ public class AppSettingsComponent {
 				.addLabeledComponent(UIMessage.ENUM_DESCRIPTION_SEPARATOR.label(), enumDescSplitText, 1, false)
 				.addLabeledComponent(UIMessage.ENUM_PARAMETER_SEPARATOR.label(), enumParamSplitText, 1, false)
 				.addLabeledComponent(UIMessage.PARAM.label(), horizontalBox, 1)
-				.addLabeledComponent(UIMessage.CREATE_TEST_METHOD.label(), createTestConfigMethodPanel, 1)
+				.addComponent(UIMessage.CREATE_TEST_METHOD.label())
+				.addComponent(createTestConfigMethodPanel, 1)
 				// .addLabeledComponent(new JBLabel("ChatGPT token"), chatGptTokenText, 1,false)
 				.addComponentFillVertically(new JPanel(), 0)
 				.getPanel();
@@ -100,10 +101,14 @@ public class AppSettingsComponent {
 	}
 
 	public void setCreateTestMethodState(CreateTestMethodState createTestMethodState) {
-		createTestConfigMethodPanel.setItems(createTestMethodState.getItems());
+		createTestConfigMethodPanel.setCreateTestMethodState(createTestMethodState);
 	}
 
 	public List<CreateTestMethodConfigItem> getCreateTestMethodConfigItems() {
 		return createTestConfigMethodPanel.getItems();
+	}
+
+	public CreateTestMethodState getCreateTestMethodState() {
+		return createTestConfigMethodPanel.getCreateTestMethodState();
 	}
 }

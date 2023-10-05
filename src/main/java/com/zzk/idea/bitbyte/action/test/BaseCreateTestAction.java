@@ -68,11 +68,13 @@ import com.intellij.testIntegration.createTest.JavaTestGenerator;
 import com.intellij.util.IncorrectOperationException;
 import com.intellij.util.containers.ContainerUtil;
 import com.zzk.idea.bitbyte.constants.Message;
+import com.zzk.idea.bitbyte.constants.NamingMethod;
 import com.zzk.idea.bitbyte.constants.TestActionType;
 import com.zzk.idea.bitbyte.settings.AppSettingsState;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodState;
 import com.zzk.idea.bitbyte.util.PsiUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
@@ -161,6 +163,8 @@ public class BaseCreateTestAction extends AnAction {
 //        }
         PsiFile file = testClass.getContainingFile();
         WriteCommandAction.runWriteCommandAction(project, () -> {
+            Set<String> testClassExistMethodNames = Arrays.stream(testClass.getMethods()).map(PsiMethod::getName)
+                    .collect(Collectors.toSet());
             JavaTestGenerator.addTestMethods(CodeInsightUtil.positionCursorAtLBrace(project, file, testClass),
                     testClass,
                     srcClass,
@@ -168,8 +172,32 @@ public class BaseCreateTestAction extends AnAction {
                     methods.stream().map(MemberInfo::new).collect(Collectors.toList()),
                     false,
                     false);
+            // 处理测试方法名称
+            handleTestMethodName(testClass, testClassExistMethodNames);
             writeTestCode(file);
         });
+    }
+
+    private void handleTestMethodName(PsiClass testClass, Set<String> testClassExistMethodNames) {
+        CreateTestMethodState createTestMethodState = AppSettingsState.getInstance().getCreateTestMethodState();
+        NamingMethod testMethodNamingMethod = createTestMethodState.getTestMethodNamingMethod();
+        String testMethodNamePreFix = createTestMethodState
+                .getTestMethodNamePreFix();
+        Set<String> srcMethodNames = methods.stream().map(PsiMethod::getName).collect(Collectors.toSet());
+        Arrays.stream(testClass.getMethods())
+                .filter(x -> {
+                    return !testClassExistMethodNames.contains(x.getName());
+                })
+                .forEach(x -> {
+                    String newName = testMethodNamingMethod.getFromCamelCaseFunction()
+                            .apply(x.getName());
+                    if (testMethodNamingMethod == NamingMethod.CAMEL_CASE) {
+                        newName = StringUtils.capitalize(newName);
+                    } else if (testMethodNamingMethod == NamingMethod.SNAKE_CASE) {
+                        newName = "_" + newName;
+                    }
+                    x.setName(testMethodNamePreFix + newName);
+                });
     }
 
     private static void writeTestCode(PsiFile file) {

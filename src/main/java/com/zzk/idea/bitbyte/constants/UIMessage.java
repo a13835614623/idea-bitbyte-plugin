@@ -14,7 +14,11 @@ public enum UIMessage {
     ENUM_DESCRIPTION_SEPARATOR("Enum description separator"),
     ENUM_PARAMETER_SEPARATOR("Enum parameter separator"),
     PARAM("Param"),
-    CREATE_TEST_METHOD("Create test method");
+    CREATE_TEST_METHOD("Create test method"),
+    TEST_METHOD_NAMING_METHOD("Test method naming method"),
+    TEST_METHOD_NAME_PREFIX("Test method prefix"),
+
+    ;
 
 
     private final String text;

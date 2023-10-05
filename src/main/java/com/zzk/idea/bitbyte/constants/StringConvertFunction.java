@@ -31,6 +31,11 @@ public enum StringConvertFunction implements Function<String, String> {
      * 转小写
      */
     TO_LOWER_CASE(String::toLowerCase),
+    /**
+     * 转换为Pascal命名
+     */
+    TO_PASCAL_CASE(StringUtils::capitalize),
+
     ;
 
     private final Function<String, String> converter;

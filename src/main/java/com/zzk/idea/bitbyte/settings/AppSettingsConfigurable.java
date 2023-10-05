@@ -49,7 +49,7 @@ public class AppSettingsConfigurable implements Configurable {
         modified |= !Objects.equals(mySettingsComponent.getChatGptToken(), codeOptimizationState.getChatGptToken());
 
         CreateTestMethodState createTestMethodState = instance.getCreateTestMethodState();
-        modified |= !Objects.equals(mySettingsComponent.getCreateTestMethodConfigItems(), createTestMethodState.getItems());
+        modified |= !Objects.equals(mySettingsComponent.getCreateTestMethodState(), createTestMethodState);
         return modified;
     }
 
@@ -65,8 +65,10 @@ public class AppSettingsConfigurable implements Configurable {
         codeOptimizationState.setChatGptToken(mySettingsComponent.getChatGptToken());
 
         CreateTestMethodState createTestMethodState = instance.getCreateTestMethodState();
-
-        createTestMethodState.setItems(mySettingsComponent.getCreateTestMethodConfigItems());
+        CreateTestMethodState nowState = mySettingsComponent.getCreateTestMethodState();
+        createTestMethodState.setItems(nowState.getItems());
+        createTestMethodState.setTestMethodNamePreFix(nowState.getTestMethodNamePreFix());
+        createTestMethodState.setTestMethodNamingMethod(nowState.getTestMethodNamingMethod());
     }
 
     @Override

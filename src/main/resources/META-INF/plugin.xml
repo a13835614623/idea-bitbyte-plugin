@@ -27,6 +27,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+	    <li><b>1.2.4</b> Support setting test method prefixes and naming methods. </li>
 	    <li><b>1.2.3</b> Right-click menu support for creating test classes when right-clicking in Java classes. </li>
 	    <li><b>1.2.2</b> Fix the problem that configuration parameters will be lost after restarting IDEA. </li>
         <li><b>1.2.1</b> Support for creating tests in the right-click menu and generate secondary menu. </li>
@@ -41,7 +42,7 @@
     ]]>
 	</change-notes>
 
-	<version>2023.10.04</version>
+	<version>2023.10.05</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
