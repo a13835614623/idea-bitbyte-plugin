@@ -45,7 +45,7 @@ public class CreateTestConfigMethodPanel extends JPanel {
         add(FormBuilder.createFormBuilder()
                 .addLabeledComponent(UIMessage.TEST_METHOD_NAME_PREFIX.label(), testMethodPrefixField)
                 .addLabeledComponent(UIMessage.TEST_METHOD_NAMING_METHOD.label(), testMethodNamingMethodBox)
-                .addComponent(new JBScrollPane(buildTable(buildDefaultTableModel())))
+                .addComponent(new JBScrollPane(table))
                 .addComponent(buildButtonPanel())
                 .getPanel());
     }
