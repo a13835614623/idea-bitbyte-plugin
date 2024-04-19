@@ -22,6 +22,7 @@ import com.intellij.ide.fileTemplates.FileTemplateDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
 import com.intellij.ide.fileTemplates.FileTemplateUtil;
 import com.intellij.java.JavaBundle;
+import com.intellij.lang.jvm.JvmModifier;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -42,18 +43,24 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementFactory;
+import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiImportList;
+import com.intellij.psi.PsiImportStatement;
 import com.intellij.psi.PsiImportStatementBase;
 import com.intellij.psi.PsiJavaCodeReferenceElement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiModifier;
 import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiReferenceList;
+import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleSettings;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.GlobalSearchScopesCore;
@@ -88,6 +95,8 @@ import org.jetbrains.jps.model.java.JavaSourceRootType;
 @SuppressWarnings("ALL")
 public class BaseCreateTestAction extends AnAction {
 
+    public static final String MOCK = "Mock";
+    public static final String INJECT_MOCKS = "InjectMocks";
     /**
      * 类
      */
@@ -162,20 +171,127 @@ public class BaseCreateTestAction extends AnAction {
 //            addSuperClass(testClass, project, superClassName);
 //        }
         PsiFile file = testClass.getContainingFile();
+
         WriteCommandAction.runWriteCommandAction(project, () -> {
-            Set<String> testClassExistMethodNames = Arrays.stream(testClass.getMethods()).map(PsiMethod::getName)
-                    .collect(Collectors.toSet());
-            JavaTestGenerator.addTestMethods(CodeInsightUtil.positionCursorAtLBrace(project, file, testClass),
-                    testClass,
-                    srcClass,
-                    testFramework,
-                    methods.stream().map(MemberInfo::new).collect(Collectors.toList()),
-                    false,
-                    false);
-            // 处理测试方法名称
-            handleTestMethodName(testClass, testClassExistMethodNames);
-            writeTestCode(file);
+            // 测试方法
+            addTestMethod(testClass, project, file, srcClass);
+
+            // mock字段
+            addMockFields(testClass, project, srcClass);
+
+            JavaCodeStyleManager javaCodeStyleManager = JavaCodeStyleManager.getInstance(project);
+            javaCodeStyleManager.optimizeImports(file);
+            PsiDocumentManager.getInstance(project)
+                    .doPostponedOperationsAndUnblockDocument(testClass.getContainingFile().getViewProvider()
+                            .getDocument());
         });
+    }
+
+    private void addMockFields(PsiClass testClass, Project project, PsiClass srcClass) {
+        if (testActionType == TestActionType.INTEGRATION_TEST) {
+            return;
+        }
+        if (hasStaticMethod()) {
+            return;
+        }
+
+        PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
+        PsiClass mockAnnotationClass = findClass(project, "org.mockito.Mock");
+        PsiClass injectMocksClass = findClass(project, "org.mockito.InjectMocks");
+        if (mockAnnotationClass == null || injectMocksClass == null) {
+            return;
+        }
+        if (testClass.getAllFields().length != 0) {
+            return;
+        }
+        // mock字段
+        List<PsiField> newFields = Stream.concat(createMockFields(srcClass, factory).stream(),
+                        Stream.of(createInjectMocksField(srcClass, factory)))
+                .collect(Collectors.toList());
+        newFields.forEach(testClass::add);
+        // 加import
+        addImport(testClass, factory, List.of(mockAnnotationClass, injectMocksClass, srcClass));
+    }
+
+    private static PsiField createInjectMocksField(PsiClass srcClass, PsiElementFactory factory) {
+        String srcClassFieldName = StringUtils.capitalize(srcClass.getName());
+        PsiClassType type = factory.createType(srcClass);
+        PsiField srcClassField = factory.createField(srcClassFieldName, type);
+        srcClassField.getModifierList().addAnnotation(INJECT_MOCKS);
+        return srcClassField;
+    }
+
+    private boolean hasStaticMethod() {
+        return methods.stream().anyMatch(x -> x.hasModifier(JvmModifier.STATIC));
+    }
+
+    private static @NotNull List<PsiField> createMockFields(PsiClass srcClass, PsiElementFactory factory) {
+        return Arrays.stream(srcClass.getAllFields())
+                .filter(x -> !x.getModifierList().hasExplicitModifier(PsiModifier.STATIC))
+                .map(srcField -> {
+                    PsiField field = factory.createField(srcField.getName(), srcField.getType());
+                    field.getModifierList().addAnnotation(MOCK);
+                    return field;
+                }).collect(Collectors.toList());
+    }
+
+    private void addImport(PsiClass testClass, PsiElementFactory factory, List<PsiClass> mockAnnotationClass) {
+        PsiFile containingFile = testClass.getContainingFile();
+        if (!(containingFile instanceof PsiJavaFile)) {
+            return;
+        }
+        PsiImportList importList = ((PsiJavaFile) containingFile).getImportList();
+        Set<String> existImports = Arrays.stream(importList.getImportStatements())
+                .map(PsiImportStatement::getQualifiedName)
+                .collect(Collectors.toSet());
+        List<PsiClass> needImportClasses = mockAnnotationClass.stream()
+                .filter(x -> !existImports.contains(x))
+                .collect(Collectors.toList());
+        for (PsiClass needImportClass : needImportClasses) {
+            PsiImportStatement importStatement = factory.createImportStatement(needImportClass);
+            int insertIndex = findInsertIndex(importList.getImportStatements(), importStatement);
+            importList.addBefore(importStatement, importList.getImportStatements()[insertIndex]);
+        }
+    }
+
+    private boolean findExistingImport(PsiImportList importList, String qualifiedName) {
+        for (PsiImportStatement importStatement : importList.getImportStatements()) {
+            if (importStatement.getQualifiedName().equals(qualifiedName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private int findInsertIndex(PsiImportStatement[] existingImports, PsiImportStatement newImport) {
+        // 这里仅作为示例，实际实现可能需要考虑 IntelliJ IDEA 的代码风格设置和排序规则
+        // 例如，按照 ASCII 字典序对 import 进行排序
+        for (int i = 0; i < existingImports.length; i++) {
+            if (newImport.getText().compareTo(existingImports[i].getText()) < 0) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private static boolean hasMockito(Project project) {
+        return findClass(project, "org.mockito.Mock") != null;
+    }
+
+
+    private void addTestMethod(PsiClass testClass, Project project, PsiFile file, PsiClass srcClass) {
+        Set<String> testClassExistMethodNames = Arrays.stream(testClass.getMethods())
+                .map(PsiMethod::getName)
+                .collect(Collectors.toSet());
+        JavaTestGenerator.addTestMethods(CodeInsightUtil.positionCursorAtLBrace(project, file, testClass),
+                testClass,
+                srcClass,
+                testFramework,
+                methods.stream().map(MemberInfo::new).collect(Collectors.toList()),
+                false,
+                false);
+        // 处理测试方法名称
+        handleTestMethodName(testClass, testClassExistMethodNames);
     }
 
     private void handleTestMethodName(PsiClass testClass, Set<String> testClassExistMethodNames) {
@@ -200,7 +316,7 @@ public class BaseCreateTestAction extends AnAction {
                 });
     }
 
-    private static void writeTestCode(PsiFile file) {
+    private static void addTestImports(PsiFile file) {
         if (file instanceof PsiJavaFile) {
             PsiImportList list = ((PsiJavaFile) file).getImportList();
             if (list != null) {
