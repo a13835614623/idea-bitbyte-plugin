@@ -62,8 +62,10 @@ import com.intellij.psi.PsiPackage;
 import com.intellij.psi.PsiReferenceList;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleSettings;
+import com.intellij.psi.impl.source.PsiClassReferenceType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.GlobalSearchScopesCore;
+import com.intellij.psi.search.PsiShortNamesCache;
 import com.intellij.psi.util.PsiUtilCore;
 import com.intellij.refactoring.PackageWrapper;
 import com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesUtil;
@@ -97,6 +99,9 @@ public class BaseCreateTestAction extends AnAction {
 
     public static final String MOCK = "Mock";
     public static final String INJECT_MOCKS = "InjectMocks";
+    public static final String ORG_JUNIT_JUPITER_API_TEST = "org.junit.jupiter.api.Test";
+    public static final String ORG_MOCKITO_MOCK = "org.mockito.Mock";
+    public static final String ORG_MOCKITO_INJECT_MOCKS = "org.mockito.InjectMocks";
     /**
      * 类
      */
@@ -166,26 +171,41 @@ public class BaseCreateTestAction extends AnAction {
             Message.TEST_CLASS_CREATE_FAIL.showErrorDialog();
             return;
         }
-        // todo 后续支持设置自定义父类
-//        if (!Comparing.strEqual(superClassName, defaultSuperClass)) {
-//            addSuperClass(testClass, project, superClassName);
-//        }
         PsiFile file = testClass.getContainingFile();
-
         WriteCommandAction.runWriteCommandAction(project, () -> {
+            // 设置父类
+            addSuperClass(testClass, project, testActionType.getDefaultSupperClassName());
+
             // 测试方法
             addTestMethod(testClass, project, file, srcClass);
 
             // mock字段
             addMockFields(testClass, project, srcClass);
 
-            JavaCodeStyleManager javaCodeStyleManager = JavaCodeStyleManager.getInstance(project);
-            javaCodeStyleManager.optimizeImports(file);
-            PsiDocumentManager.getInstance(project)
-                    .doPostponedOperationsAndUnblockDocument(testClass.getContainingFile().getViewProvider()
-                            .getDocument());
+            // 测试注解
+            addTestAnnotationImport(project, testClass);
+
+            // 格式化
+            format(project, file, testClass);
         });
     }
+
+    private static void format(Project project, PsiFile file, PsiClass testClass) {
+        JavaCodeStyleManager javaCodeStyleManager = JavaCodeStyleManager.getInstance(project);
+        javaCodeStyleManager.optimizeImports(file);
+        PsiDocumentManager.getInstance(project)
+                .doPostponedOperationsAndUnblockDocument(testClass.getContainingFile().getViewProvider()
+                        .getDocument());
+    }
+
+    private void addTestAnnotationImport(Project project, PsiClass testClass) {
+        PsiClass aClass = findClass(project, ORG_JUNIT_JUPITER_API_TEST);
+        Optional.ofNullable(aClass)
+                .ifPresent(testAnnotationClass -> {
+                    addImport(testClass, project, List.of(testAnnotationClass));
+                });
+    }
+
 
     private void addMockFields(PsiClass testClass, Project project, PsiClass srcClass) {
         if (testActionType == TestActionType.INTEGRATION_TEST) {
@@ -195,15 +215,15 @@ public class BaseCreateTestAction extends AnAction {
             return;
         }
 
-        PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
-        PsiClass mockAnnotationClass = findClass(project, "org.mockito.Mock");
-        PsiClass injectMocksClass = findClass(project, "org.mockito.InjectMocks");
+        PsiClass mockAnnotationClass = findClass(project, ORG_MOCKITO_MOCK);
+        PsiClass injectMocksClass = findClass(project, ORG_MOCKITO_INJECT_MOCKS);
         if (mockAnnotationClass == null || injectMocksClass == null) {
             return;
         }
         if (testClass.getAllFields().length != 0) {
             return;
         }
+        PsiElementFactory factory = PsiElementFactory.getInstance(project);
         // mock字段
         List<PsiField> newFields = Stream.concat(createMockFields(srcClass, factory).stream(),
                         Stream.of(createInjectMocksField(srcClass, factory)))
@@ -215,8 +235,9 @@ public class BaseCreateTestAction extends AnAction {
 
     private static PsiField createInjectMocksField(PsiClass srcClass, PsiElementFactory factory) {
         String srcClassFieldName = StringUtils.capitalize(srcClass.getName());
-        PsiClassType type = factory.createType(srcClass);
-        PsiField srcClassField = factory.createField(srcClassFieldName, type);
+        GlobalSearchScope scope = GlobalSearchScope.projectScope(srcClass.getProject());
+        PsiClassType classType = PsiClassReferenceType.getTypeByName(srcClass.getName(), srcClass.getProject(), scope);
+        PsiField srcClassField = factory.createField(srcClassFieldName, classType);
         srcClassField.getModifierList().addAnnotation(INJECT_MOCKS);
         return srcClassField;
     }
@@ -235,6 +256,10 @@ public class BaseCreateTestAction extends AnAction {
                 }).collect(Collectors.toList());
     }
 
+    private void addImport(PsiClass testClass, Project project, List<PsiClass> mockAnnotationClass) {
+        addImport(testClass, PsiElementFactory.getInstance(project), mockAnnotationClass);
+    }
+
     private void addImport(PsiClass testClass, PsiElementFactory factory, List<PsiClass> mockAnnotationClass) {
         PsiFile containingFile = testClass.getContainingFile();
         if (!(containingFile instanceof PsiJavaFile)) {
@@ -249,8 +274,7 @@ public class BaseCreateTestAction extends AnAction {
                 .collect(Collectors.toList());
         for (PsiClass needImportClass : needImportClasses) {
             PsiImportStatement importStatement = factory.createImportStatement(needImportClass);
-            int insertIndex = findInsertIndex(importList.getImportStatements(), importStatement);
-            importList.addBefore(importStatement, importList.getImportStatements()[insertIndex]);
+            importList.addBefore(importStatement, importList.getImportStatements()[0]);
         }
     }
 
@@ -334,24 +358,26 @@ public class BaseCreateTestAction extends AnAction {
     }
 
     private static void addSuperClass(PsiClass targetClass, Project project, String superClassName) throws IncorrectOperationException {
-        if (superClassName == null) return;
-        final PsiReferenceList extendsList = targetClass.getExtendsList();
-        if (extendsList == null) return;
-
-        PsiElementFactory ef = JavaPsiFacade.getElementFactory(project);
-        PsiJavaCodeReferenceElement superClassRef;
-
-        PsiClass superClass = findClass(project, superClassName);
-        if (superClass != null) {
-            superClassRef = ef.createClassReferenceElement(superClass);
-        } else {
-            superClassRef = ef.createFQClassNameReferenceElement(superClassName, GlobalSearchScope.allScope(project));
+        if (superClassName == null) {
+            return;
         }
+        final PsiReferenceList extendsList = targetClass.getExtendsList();
+        if (extendsList == null) {
+            return;
+        }
+        GlobalSearchScope scope = GlobalSearchScope.projectScope(project);
+        PsiShortNamesCache cache = PsiShortNamesCache.getInstance(project);
+        PsiClass[] testClasses = cache.getClassesByName(superClassName, scope);
+        PsiClass superClass = Arrays.stream(cache.getClassesByName(superClassName, scope))
+                .findFirst().orElse(null);
+        if (superClass == null) {
+            return;
+        }
+        PsiJavaCodeReferenceElement superClassRef = JavaPsiFacade.getElementFactory(project)
+                .createClassReferenceElement(superClass);
         final PsiJavaCodeReferenceElement[] referenceElements = extendsList.getReferenceElements();
         if (referenceElements.length == 0) {
             extendsList.add(superClassRef);
-        } else {
-            referenceElements[0].replace(superClassRef);
         }
     }
 

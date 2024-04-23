@@ -8,21 +8,28 @@ package com.zzk.idea.bitbyte.constants;
  */
 public enum TestActionType {
 
-    UNIT_TEST("Unit Test", "UnitTest"),
+    UNIT_TEST("Unit Test", "UnitTest", "BaseUnitTest"),
 
-    INTEGRATION_TEST("Integration Test", "IntegrationTest");
+    INTEGRATION_TEST("Integration Test", "IntegrationTest", "BaseIntegrationTest");
 
     private final String text;
 
     private final String defaultSuffix;
 
-    TestActionType(String text, String defaultSuffix) {
+    private final String defaultSupperClassName;
+
+    TestActionType(String text, String defaultSuffix, String defaultSupperClassName) {
         this.text = text;
         this.defaultSuffix = defaultSuffix;
+        this.defaultSupperClassName = defaultSupperClassName;
     }
 
     public String getText() {
         return text;
+    }
+
+    public String getDefaultSupperClassName() {
+        return defaultSupperClassName;
     }
 
     public String getCreateText() {
