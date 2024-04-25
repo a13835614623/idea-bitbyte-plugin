@@ -83,7 +83,7 @@ import com.zzk.idea.bitbyte.settings.AppSettingsState;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodConfigItem;
 import com.zzk.idea.bitbyte.settings.CreateTestMethodState;
 import com.zzk.idea.bitbyte.util.PsiUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.zzk.idea.bitbyte.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jps.model.java.JavaSourceRootType;
@@ -220,7 +220,7 @@ public class BaseCreateTestAction extends AnAction {
         if (mockAnnotationClass == null || injectMocksClass == null) {
             return;
         }
-        if (testClass.getAllFields().length != 0) {
+        if (testClass.getFields().length != 0) {
             return;
         }
         PsiElementFactory factory = PsiElementFactory.getInstance(project);
@@ -234,10 +234,9 @@ public class BaseCreateTestAction extends AnAction {
     }
 
     private static PsiField createInjectMocksField(PsiClass srcClass, PsiElementFactory factory) {
-        String srcClassFieldName = StringUtils.capitalize(srcClass.getName());
         GlobalSearchScope scope = GlobalSearchScope.projectScope(srcClass.getProject());
         PsiClassType classType = PsiClassReferenceType.getTypeByName(srcClass.getName(), srcClass.getProject(), scope);
-        PsiField srcClassField = factory.createField(srcClassFieldName, classType);
+        PsiField srcClassField = factory.createField(StringUtil.toLowerCaseFirstChar(srcClass.getName()), classType);
         srcClassField.getModifierList().addAnnotation(INJECT_MOCKS);
         return srcClassField;
     }
@@ -332,7 +331,7 @@ public class BaseCreateTestAction extends AnAction {
                     String newName = testMethodNamingMethod.getFromCamelCaseFunction()
                             .apply(x.getName());
                     if (testMethodNamingMethod == NamingMethod.CAMEL_CASE) {
-                        newName = StringUtils.capitalize(newName);
+                        newName = StringUtil.toLowerCaseFirstChar(newName);
                     } else if (testMethodNamingMethod == NamingMethod.SNAKE_CASE) {
                         newName = "_" + newName;
                     }
@@ -597,4 +596,7 @@ public class BaseCreateTestAction extends AnAction {
         return prefix + targetClass.getName() + testActionType.getDefaultSuffix();
     }
 
+    public void test() {
+
+    }
 }
