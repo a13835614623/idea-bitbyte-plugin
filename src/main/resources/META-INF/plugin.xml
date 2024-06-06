@@ -115,6 +115,12 @@
 			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
 		</action>
+		<!--  lombok builder  -->
+		<action id="com.zzk.idea.bitbyte.action.test.LombokBuilderRefactoringAction"
+				class="com.zzk.idea.bitbyte.action.test.LombokBuilderRefactoringAction"
+				text="To Lombok Builder" description="To Lombok Builder">
+			<add-to-group group-id="RefactoringMenu" anchor="first"/>
+		</action>
 
 		<!--  单元测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"

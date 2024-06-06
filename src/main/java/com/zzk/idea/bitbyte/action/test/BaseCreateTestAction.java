@@ -199,10 +199,10 @@ public class BaseCreateTestAction extends AnAction {
     }
 
     private void addTestAnnotationImport(Project project, PsiClass testClass) {
-        PsiClass aClass = findClass(project, ORG_JUNIT_JUPITER_API_TEST);
+        PsiClass aClass = PsiUtil.findClass(project, ORG_JUNIT_JUPITER_API_TEST);
         Optional.ofNullable(aClass)
                 .ifPresent(testAnnotationClass -> {
-                    addImport(testClass, project, List.of(testAnnotationClass));
+                    PsiUtil.addImport(testClass, project, List.of(testAnnotationClass));
                 });
     }
 
@@ -215,8 +215,8 @@ public class BaseCreateTestAction extends AnAction {
             return;
         }
 
-        PsiClass mockAnnotationClass = findClass(project, ORG_MOCKITO_MOCK);
-        PsiClass injectMocksClass = findClass(project, ORG_MOCKITO_INJECT_MOCKS);
+        PsiClass mockAnnotationClass = PsiUtil.findClass(project, ORG_MOCKITO_MOCK);
+        PsiClass injectMocksClass = PsiUtil.findClass(project, ORG_MOCKITO_INJECT_MOCKS);
         if (mockAnnotationClass == null || injectMocksClass == null) {
             return;
         }
@@ -230,7 +230,7 @@ public class BaseCreateTestAction extends AnAction {
                 .collect(Collectors.toList());
         newFields.forEach(testClass::add);
         // 加import
-        addImport(testClass, factory, List.of(mockAnnotationClass, injectMocksClass, srcClass));
+        PsiUtil.addImport(testClass, factory, List.of(mockAnnotationClass, injectMocksClass, srcClass));
     }
 
     private static PsiField createInjectMocksField(PsiClass srcClass, PsiElementFactory factory) {
@@ -255,37 +255,6 @@ public class BaseCreateTestAction extends AnAction {
                 }).collect(Collectors.toList());
     }
 
-    private void addImport(PsiClass testClass, Project project, List<PsiClass> mockAnnotationClass) {
-        addImport(testClass, PsiElementFactory.getInstance(project), mockAnnotationClass);
-    }
-
-    private void addImport(PsiClass testClass, PsiElementFactory factory, List<PsiClass> mockAnnotationClass) {
-        PsiFile containingFile = testClass.getContainingFile();
-        if (!(containingFile instanceof PsiJavaFile)) {
-            return;
-        }
-        PsiImportList importList = ((PsiJavaFile) containingFile).getImportList();
-        Set<String> existImports = Arrays.stream(importList.getImportStatements())
-                .map(PsiImportStatement::getQualifiedName)
-                .collect(Collectors.toSet());
-        List<PsiClass> needImportClasses = mockAnnotationClass.stream()
-                .filter(x -> !existImports.contains(x))
-                .collect(Collectors.toList());
-        for (PsiClass needImportClass : needImportClasses) {
-            PsiImportStatement importStatement = factory.createImportStatement(needImportClass);
-            importList.addBefore(importStatement, importList.getImportStatements()[0]);
-        }
-    }
-
-    private boolean findExistingImport(PsiImportList importList, String qualifiedName) {
-        for (PsiImportStatement importStatement : importList.getImportStatements()) {
-            if (importStatement.getQualifiedName().equals(qualifiedName)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private int findInsertIndex(PsiImportStatement[] existingImports, PsiImportStatement newImport) {
         // 这里仅作为示例，实际实现可能需要考虑 IntelliJ IDEA 的代码风格设置和排序规则
         // 例如，按照 ASCII 字典序对 import 进行排序
@@ -298,7 +267,7 @@ public class BaseCreateTestAction extends AnAction {
     }
 
     private static boolean hasMockito(Project project) {
-        return findClass(project, "org.mockito.Mock") != null;
+        return PsiUtil.findClass(project, "org.mockito.Mock") != null;
     }
 
 
@@ -378,12 +347,6 @@ public class BaseCreateTestAction extends AnAction {
         if (referenceElements.length == 0) {
             extendsList.add(superClassRef);
         }
-    }
-
-    @Nullable
-    private static PsiClass findClass(Project project, String fqName) {
-        GlobalSearchScope scope = GlobalSearchScope.allScope(project);
-        return JavaPsiFacade.getInstance(project).findClass(fqName, scope);
     }
 
 
