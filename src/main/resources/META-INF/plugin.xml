@@ -27,6 +27,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+		<li><b>1.4.1</b> The function of reconstructing to lombok builder supports quick fix. </li>
 		<li><b>1.4.0</b> New refactoring feature: support for converting constructors to Lombok builders (projects must import Lombok) </li>
 		<li><b>1.3.2</b> BaseUnitTest Class and BaseIntegrationTest Class are inherited by default when test classes are generated (if they can be found). </li>
 		<li><b>1.3.1</b> @InjectMock class names default to class names without package names when generating fields that test classes depend on. </li>
