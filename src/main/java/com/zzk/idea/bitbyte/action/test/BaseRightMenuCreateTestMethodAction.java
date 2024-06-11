@@ -47,7 +47,7 @@ public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
 
     @Override
     public void update(@NotNull final AnActionEvent event) {
-        PsiActionUtil.onlyMethodEnablePresentation(event);
+        event.getPresentation().setVisible(PsiActionUtil.isOnMethod(event));
     }
 
 }

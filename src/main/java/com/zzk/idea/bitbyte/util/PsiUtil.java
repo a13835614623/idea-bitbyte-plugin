@@ -1,7 +1,9 @@
 package com.zzk.idea.bitbyte.util;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,6 +23,7 @@ import com.intellij.psi.PsiImportList;
 import com.intellij.psi.PsiImportStatement;
 import com.intellij.psi.PsiJavaFile;
 import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.PsiModifierList;
 import com.intellij.psi.PsiModifierListOwner;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
@@ -29,6 +32,7 @@ import com.intellij.psi.impl.source.javadoc.PsiDocCommentImpl;
 import com.intellij.psi.javadoc.PsiDocComment;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.refactoring.replaceConstructorWithBuilder.ParameterData;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -143,5 +147,11 @@ public class PsiUtil {
 
     public static PsiAnnotation findAnnotation(@NotNull PsiModifierListOwner psiModifierListOwner, @NotNull String annotationFQN) {
         return psiModifierListOwner.getAnnotation(annotationFQN);
+    }
+
+    public static Map<String, ParameterData> getParamMap(PsiMethod constructor) {
+        LinkedHashMap<String, ParameterData> paramMap = new LinkedHashMap<>();
+        ParameterData.createFromConstructor(constructor, "", paramMap);
+        return paramMap;
     }
 }

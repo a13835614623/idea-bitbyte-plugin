@@ -9,7 +9,7 @@
 
 	<!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
 	<vendor email="zhangzikuan4513@foxmail.com">zzk</vendor>
-
+	<resource-bundle>messages.BitByteBundle</resource-bundle>
 	<!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
 		 Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
 		 Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
@@ -75,6 +75,16 @@
 		<intentionAction>
 			<className>com.zzk.idea.bitbyte.action.text.SelectedText2UpperCaseAction</className>
 		</intentionAction>
+		<localInspection
+				language="JAVA"
+				groupPath="Java"
+				groupKey="inspection.lombok.group.name.bitbyte"
+				groupBundle="messages.BitByteBundle"
+				shortName="ConstructorToLombokBuilder"
+				enabledByDefault="true"
+				implementationClass="com.zzk.idea.bitbyte.inspection.BitByteJavaInspectionBase"
+				key="inspection.lombok.constructor.to.lombok.builder.name"
+				bundle="messages.BitByteBundle"/>
 	</extensions>
 	<actions>
 		<action id="com.zzk.idea.bitbyte.action.copy.bitbyte.CopyJsonSchemaAction"
@@ -119,8 +129,9 @@
 		<!--  lombok builder  -->
 		<action id="com.zzk.idea.bitbyte.action.test.LombokBuilderRefactoringAction"
 				class="com.zzk.idea.bitbyte.action.test.LombokBuilderRefactoringAction"
-				text="To Lombok Builder" description="To Lombok Builder">
-			<add-to-group group-id="RefactoringMenu" anchor="first"/>
+				text="Replace Constructor With Lombok Builder" description="Replace Constructor With Lombok Builder">
+			<add-to-group group-id="RefactoringMenu4" anchor="after"
+						  relative-to-action="ReplaceConstructorWithBuilder"/>
 		</action>
 
 		<!--  单元测试方法  -->
@@ -142,7 +153,6 @@
 			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"/>
 		</action>
-
 		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
 		<!--			   class="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
 		<!--			   text="Code Optimization"-->
