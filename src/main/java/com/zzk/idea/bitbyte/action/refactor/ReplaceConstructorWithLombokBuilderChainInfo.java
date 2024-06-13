@@ -1,4 +1,4 @@
-package com.zzk.idea.bitbyte.action.test;
+package com.zzk.idea.bitbyte.action.refactor;
 
 import java.util.Map;
 

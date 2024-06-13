@@ -8,7 +8,7 @@ import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiMethod;
-import com.zzk.idea.bitbyte.action.test.LombokBuilderRefactoringAction;
+import com.zzk.idea.bitbyte.action.refactor.LombokBuilderRefactoringAction;
 import com.zzk.idea.bitbyte.util.LombokUtil;
 
 public class BitByteJavaInspectionBase extends AbstractBaseJavaLocalInspectionTool {

@@ -24,7 +24,7 @@ public abstract class BaseSelectedTextConvertAction extends PsiElementBaseIntent
 
     @Override
     public boolean isAvailable(@NotNull Project project, Editor editor, @NotNull PsiElement element) {
-        return true;
+        return StringUtils.isNoneBlank(editor.getSelectionModel().getSelectedText());
     }
 
     @Override
