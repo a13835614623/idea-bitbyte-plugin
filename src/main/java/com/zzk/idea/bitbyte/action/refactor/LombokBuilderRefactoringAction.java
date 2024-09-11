@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 public class LombokBuilderRefactoringAction extends AnAction implements LocalQuickFix {
 
     public static final String LOMBOK_BUILDER = "lombok.Builder";
-
+    public static final String LOMBOK_GETTER = "lombok.Getter";
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
@@ -32,6 +32,7 @@ public class LombokBuilderRefactoringAction extends AnAction implements LocalQui
                             .srcClass(constructor.getContainingClass())
                             .project(project)
                             .lombokBuilderClass(lombokBuilderClass)
+                            .lombokGetterClass(PsiUtil.findClass(project, LOMBOK_GETTER))
                             .build();
                     command.refactor();
                 });
@@ -58,6 +59,7 @@ public class LombokBuilderRefactoringAction extends AnAction implements LocalQui
                     .srcClass(constructor.getContainingClass())
                     .project(project)
                     .lombokBuilderClass(lombokBuilderClass)
+                    .lombokGetterClass(PsiUtil.findClass(project, LOMBOK_GETTER))
                     .build().refactor();
         }
     }

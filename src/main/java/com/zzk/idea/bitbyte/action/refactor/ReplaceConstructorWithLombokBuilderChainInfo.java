@@ -51,11 +51,11 @@ public class ReplaceConstructorWithLombokBuilderChainInfo extends FixableUsageIn
                         String pureParamName = styleManager.variableNameToPropertyName(parameters[i].getName(), VariableKind.PARAMETER);
                         ParameterData data = this.myParametersMap.get(pureParamName);
                         if (!Comparing.strEqual(arg.toString(), data.getDefaultValue()) || data.isInsertSetter()) {
-                            buf.append(data.getSetterName()).append("(").append(arg).append(").");
+                            buf.append(data.getSetterName()).append("(").append(arg).append(")\n.");
                         }
                     }
                     // TestParam.builder().build()
-                    PsiExpression settersChain = elementFactory.createExpressionFromText(srcClass + ".builder()." + buf + "build()", null);
+                    PsiExpression settersChain = elementFactory.createExpressionFromText(srcClass + ".builder()\n." + buf + "build()", null);
                     styleManager.shortenClassReferences(expr.replace(settersChain));
                 }
             }
