@@ -1,6 +1,7 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.8.0"
+    id("org.jetbrains.intellij.platform") version "2.2.1"
+
 }
 
 group = "com.zzk"
@@ -10,25 +11,32 @@ repositories {
     maven {
         setUrl("https://maven.aliyun.com/repository/public")
     }
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies{
     implementation("com.alibaba:fastjson:1.2.83")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
-    compileOnly("org.projectlombok:lombok:1.18.24")
-    annotationProcessor("org.projectlombok:lombok:1.18.24")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    intellijPlatform {
+        intellijIdeaCommunity("2022.3")
+        bundledPlugin("com.intellij.java")
+    }
+}
+
+intellijPlatform {
+
 }
 
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2021.2")
-    type.set("IC") // Target IDE Platform
-    plugins.set(listOf("java"))
-}
+
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 
