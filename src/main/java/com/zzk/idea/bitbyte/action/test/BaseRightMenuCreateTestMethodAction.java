@@ -1,6 +1,7 @@
 
 package com.zzk.idea.bitbyte.action.test;
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
@@ -50,4 +51,8 @@ public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
         event.getPresentation().setVisible(PsiActionUtil.isOnMethod(event));
     }
 
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
+    }
 }

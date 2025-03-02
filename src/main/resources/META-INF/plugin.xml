@@ -140,7 +140,7 @@
 		<!--  单元测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
 				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
-				text="Create Unit Test" description="Create unit test">
+				text="Create Unit Test Method" description="Create unit test Method">
 			<add-to-group group-id="EditorPopupMenu" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>
 			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
@@ -149,7 +149,7 @@
 		<!--  集成测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
 				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
-				text="Create Integration Test" description="Create integration test">
+				text="Create Integration Test Method" description="Create integration test Method">
 			<add-to-group group-id="EditorPopupMenu"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
 						  anchor="after"/>

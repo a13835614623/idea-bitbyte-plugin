@@ -23,7 +23,7 @@ dependencies{
     compileOnly("org.projectlombok:lombok:1.18.30")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     intellijPlatform {
-        intellijIdeaCommunity("2022.3")
+        intellijIdeaCommunity("2024.3.2")
         bundledPlugin("com.intellij.java")
     }
 }
