@@ -113,22 +113,7 @@
 			<add-to-group group-id="Copy.Paste.Special" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.copy.classname.CopyClassNameAction"/>
 		</action>
-		<!--  单元测试类  -->
-		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
-				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
-				text="Create Unit Test Class" description="Create unit test Class">
-			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
-			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
-		</action>
-		<!--  集成测试类  -->
-		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
-				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
-				text="Create Integration Test Class" description="Create integration test Class">
-			<add-to-group group-id="EditorPopupMenu" anchor="after"
-						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
-			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
-						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
-		</action>
+
 		<!--  lombok builder  -->
 		<action id="com.zzk.idea.bitbyte.action.refactor.LombokBuilderRefactoringAction"
 				class="com.zzk.idea.bitbyte.action.refactor.LombokBuilderRefactoringAction"
@@ -136,15 +121,16 @@
 			<add-to-group group-id="RefactoringMenu4" anchor="after"
 						  relative-to-action="ReplaceConstructorWithBuilder"/>
 		</action>
-
 		<!--  单元测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
 				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
 				text="Create Unit Test Method" description="Create unit test Method">
-			<add-to-group group-id="EditorPopupMenu" anchor="after"
-						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>
-			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
-						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>
+			<add-to-group group-id="EditorPopupMenu" anchor="first"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="first"/>
+			<!--			<add-to-group group-id="EditorPopupMenu" anchor="before"-->
+			<!--						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>-->
+			<!--			<add-to-group group-id="JavaGenerateGroup1" anchor="before"-->
+			<!--						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"/>-->
 		</action>
 		<!--  集成测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestMethodAction"
@@ -156,6 +142,25 @@
 			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"/>
 		</action>
+		<!--  单元测试类  -->
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"
+				text="Create Unit Test Class" description="Create unit test Class">
+			<add-to-group group-id="EditorPopupMenu" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"/>
+		</action>
+		<!--  集成测试类  -->
+		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
+				class="com.zzk.idea.bitbyte.action.test.RightMenuCreateIntegrationTestClassAction"
+				text="Create Integration Test Class" description="Create integration test Class">
+			<add-to-group group-id="EditorPopupMenu" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
+			<add-to-group group-id="JavaGenerateGroup1" anchor="after"
+						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
+		</action>
+
 		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
 		<!--			   class="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
 		<!--			   text="Code Optimization"-->
