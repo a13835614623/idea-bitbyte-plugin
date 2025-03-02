@@ -43,7 +43,7 @@ java {
 tasks {
 
     patchPluginXml {
-        sinceBuild.set("212")
+        sinceBuild.set("243")
         untilBuild.set("299.*")
     }
 
