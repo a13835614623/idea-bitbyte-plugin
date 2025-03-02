@@ -137,6 +137,10 @@ public class BaseCreateTestAction extends AnAction {
 
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
+        doAction(e);
+    }
+
+    public void doAction(@NotNull AnActionEvent e) {
         Project project = e.getRequiredData(CommonDataKeys.PROJECT);
         VirtualFile virtualFile = psiClass.getContainingFile().getVirtualFile();
         PsiDirectory srcDir = psiClass.getContainingFile().getContainingDirectory();

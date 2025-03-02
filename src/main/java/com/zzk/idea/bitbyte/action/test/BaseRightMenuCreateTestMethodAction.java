@@ -42,7 +42,7 @@ public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
                 .filter(x -> "JUnit5".equalsIgnoreCase(x.getName()))
                 .findFirst()
                 .ifPresent(framework -> {
-                    new BaseCreateTestAction(containingMethod, framework, testActionType).actionPerformed(event);
+                    new BaseCreateTestAction(containingMethod, framework, testActionType).doAction(event);
                 });
     }
 
