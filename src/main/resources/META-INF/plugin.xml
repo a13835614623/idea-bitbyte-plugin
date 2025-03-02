@@ -27,6 +27,7 @@
 	<change-notes>
 		<![CDATA[
       <ul>
+		<li><b>1.4.3</b> Change to use JDK 17 for building and upgrade the build tool. </li>
 		<li><b>1.4.2</b> The function of reconstructing to lombok builder supports add Lombok @Getter. </li>
 		<li><b>1.4.1</b> The function of reconstructing to lombok builder supports quick fix. </li>
 		<li><b>1.4.0</b> New refactoring feature: support for converting constructors to Lombok builders (projects must import Lombok) </li>
@@ -48,7 +49,7 @@
     ]]>
 	</change-notes>
 
-	<version>2024.09.11</version>
+	<version>2025.03.02</version>
 	<!-- Product and plugin compatibility requirements.
 		 Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
 	<depends>com.intellij.modules.platform</depends>
