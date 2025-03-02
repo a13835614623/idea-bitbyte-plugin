@@ -309,8 +309,8 @@ public class BaseCreateTestAction extends AnAction {
     }
 
     private static void addTestImports(PsiFile file) {
-        if (file instanceof PsiJavaFile) {
-            PsiImportList list = ((PsiJavaFile) file).getImportList();
+        if (file instanceof PsiJavaFile psiJavaFile) {
+            PsiImportList list = psiJavaFile.getImportList();
             if (list != null) {
                 PsiImportStatementBase[] importStatements = list.getAllImportStatements();
                 if (importStatements.length > 0) {
