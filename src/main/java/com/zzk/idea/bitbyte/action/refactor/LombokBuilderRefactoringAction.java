@@ -3,6 +3,7 @@ package com.zzk.idea.bitbyte.action.refactor;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.util.IntentionFamilyName;
+import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.project.Project;
@@ -62,6 +63,11 @@ public class LombokBuilderRefactoringAction extends AnAction implements LocalQui
                     .lombokGetterClass(PsiUtil.findClass(project, LOMBOK_GETTER))
                     .build().refactor();
         }
+    }
+
+    @Override
+    public @NotNull ActionUpdateThread getActionUpdateThread() {
+        return ActionUpdateThread.BGT;
     }
 
 }

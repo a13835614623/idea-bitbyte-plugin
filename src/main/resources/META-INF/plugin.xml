@@ -117,9 +117,8 @@
 		<!--  lombok builder  -->
 		<action id="com.zzk.idea.bitbyte.action.refactor.LombokBuilderRefactoringAction"
 				class="com.zzk.idea.bitbyte.action.refactor.LombokBuilderRefactoringAction"
-				text="Replace Constructor With Lombok Builder" description="Replace Constructor With Lombok Builder">
-			<add-to-group group-id="RefactoringMenu4" anchor="after"
-						  relative-to-action="ReplaceConstructorWithBuilder"/>
+				text="Replace Constructor With Lombok Builder" description="Replace constructor with lombok builder">
+			<add-to-group group-id="RefactoringMenu4" anchor="last"/>
 		</action>
 		<!--  单元测试方法  -->
 		<action id="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestMethodAction"
