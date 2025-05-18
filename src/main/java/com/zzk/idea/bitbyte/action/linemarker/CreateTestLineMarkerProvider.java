@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.intellij.codeInsight.daemon.GutterName;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
+import com.intellij.execution.junit.JUnitTestFramework;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
@@ -39,7 +40,9 @@ public class CreateTestLineMarkerProvider extends LineMarkerProviderDescriptor {
         if (TestIntegrationUtils.isTest(element)) {
             return null;
         }
-        Optional<TestFramework> testFramework = TestFramework.EXTENSION_NAME.extensions()
+        Optional<TestFramework> testFramework = TestFramework.EXTENSION_NAME.getExtensionList()
+                .stream()
+                .filter(x -> x instanceof JUnitTestFramework)
                 .filter(x -> "JUnit5".equalsIgnoreCase(x.getName()))
                 .findFirst();
         if (testFramework.isEmpty()) {
