@@ -161,20 +161,6 @@
 						  relative-to-action="com.zzk.idea.bitbyte.action.test.RightMenuCreateUnitTestClassAction"/>
 		</action>
 
-		<!--		<group id="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
-		<!--			   class="com.zzk.idea.bitbyte.action.code.CodeFunctionActionGroup"-->
-		<!--			   text="Code Optimization"-->
-		<!--			   popup="true">-->
-		<!--			<add-to-group group-id="EditorPopupMenu" anchor="first"/>-->
-		<!--			<action id="com.zzk.idea.bitbyte.action.code.CodeOptimizationAction"-->
-		<!--					class="com.zzk.idea.bitbyte.action.code.CodeOptimizationAction"-->
-		<!--					text="Optimization Selected Code" description="Optimization selected code">-->
-		<!--			</action>-->
-		<!--			<action id="com.zzk.idea.bitbyte.action.code.CodeTestAction"-->
-		<!--					class="com.zzk.idea.bitbyte.action.code.CodeTestAction" text="Test Selected Code"-->
-		<!--					description="Test selected code">-->
-		<!--			</action>-->
-		<!--		</group>-->
 	</actions>
 
 </idea-plugin>

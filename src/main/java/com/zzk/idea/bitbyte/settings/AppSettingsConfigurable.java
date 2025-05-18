@@ -5,7 +5,6 @@ import java.util.Objects;
 import javax.swing.JComponent;
 
 import com.intellij.openapi.options.Configurable;
-import com.zzk.idea.bitbyte.action.code.CodeOptimizationState;
 import com.zzk.idea.bitbyte.action.copy.enumdesc.CopyEnumState;
 import com.zzk.idea.bitbyte.settings.ui.AppSettingsComponent;
 import org.jetbrains.annotations.Nls;
@@ -45,9 +44,6 @@ public class AppSettingsConfigurable implements Configurable {
         modified |= !Objects.equals(mySettingsComponent.getEnumParamSplit(), copyEnumState.getParamSplit());
         modified |= !Objects.equals(mySettingsComponent.getEnumParamTypes(), copyEnumState.getParamTypes());
 
-        CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
-        modified |= !Objects.equals(mySettingsComponent.getChatGptToken(), codeOptimizationState.getChatGptToken());
-
         CreateTestMethodState createTestMethodState = instance.getCreateTestMethodState();
         modified |= !Objects.equals(mySettingsComponent.getCreateTestMethodState(), createTestMethodState);
         return modified;
@@ -60,9 +56,6 @@ public class AppSettingsConfigurable implements Configurable {
         copyEnumState.setParamSplit(mySettingsComponent.getEnumParamSplit());
         copyEnumState.setDescSplit(mySettingsComponent.getEnumDescSplit());
         copyEnumState.setParamTypes(mySettingsComponent.getEnumParamTypes());
-
-        CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
-        codeOptimizationState.setChatGptToken(mySettingsComponent.getChatGptToken());
 
         CreateTestMethodState createTestMethodState = instance.getCreateTestMethodState();
         CreateTestMethodState nowState = mySettingsComponent.getCreateTestMethodState();
@@ -78,10 +71,6 @@ public class AppSettingsConfigurable implements Configurable {
         mySettingsComponent.setEnumDescSplit(copyEnumState.getDescSplit());
         mySettingsComponent.setEnumParamSplit(copyEnumState.getParamSplit());
         mySettingsComponent.setEnumParamTypes(copyEnumState.getParamTypes());
-
-        CodeOptimizationState codeOptimizationState = instance.getCodeOptimizationState();
-        mySettingsComponent.setChatGptToken(codeOptimizationState.getChatGptToken());
-
         mySettingsComponent.setCreateTestMethodState(instance.getCreateTestMethodState());
     }
 
