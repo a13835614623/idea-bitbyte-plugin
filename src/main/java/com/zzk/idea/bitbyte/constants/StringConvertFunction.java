@@ -2,6 +2,7 @@ package com.zzk.idea.bitbyte.constants;
 
 import java.util.function.Function;
 
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +41,7 @@ public enum StringConvertFunction implements Function<String, String> {
 
     private final Function<String, String> converter;
 
+    @Getter
     private final String text;
 
     StringConvertFunction(Function<String, String> converter, String text) {
@@ -52,6 +54,9 @@ public enum StringConvertFunction implements Function<String, String> {
         this.text = toFirstUpperCaseElseLowerCase(name());
     }
 
+    /**
+     * 转换
+     */
     @Override
     public String apply(String s) {
         if (StringUtils.isEmpty(s)) {
@@ -60,10 +65,9 @@ public enum StringConvertFunction implements Function<String, String> {
         return converter.apply(s);
     }
 
-    public String getText() {
-        return text;
-    }
-
+    /**
+     * 将字符串转换成下划线大写
+     */
     private static String toUnderlineUpperCase(String s) {
         String ss = s.trim();
         int length = ss.length();
@@ -82,6 +86,9 @@ public enum StringConvertFunction implements Function<String, String> {
         return sb.toString().toUpperCase();
     }
 
+    /**
+     * 将字符串转换成Pascal命名
+     */
     @NotNull
     private static String toFirstUpperCaseElseLowerCase(String name) {
         String replace = name.toLowerCase().replace("_", " ");

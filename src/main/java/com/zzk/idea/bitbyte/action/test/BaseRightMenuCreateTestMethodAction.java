@@ -11,9 +11,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.testIntegration.TestFramework;
 import com.zzk.idea.bitbyte.constants.TestActionType;
 import com.zzk.idea.bitbyte.util.PsiActionUtil;
+import com.zzk.idea.bitbyte.util.TestFrameworkUtil;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
@@ -38,9 +38,7 @@ public abstract class BaseRightMenuCreateTestMethodAction extends AnAction {
         if (containingMethod == null) {
             return;
         }
-        TestFramework.EXTENSION_NAME.extensions()
-                .filter(x -> "JUnit5".equalsIgnoreCase(x.getName()))
-                .findFirst()
+        TestFrameworkUtil.getJunit5TestFramework(containingMethod.getContainingClass())
                 .ifPresent(framework -> {
                     new BaseCreateTestAction(containingMethod, framework, testActionType).doAction(event);
                 });

@@ -11,8 +11,8 @@ import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.testIntegration.TestFramework;
 import com.zzk.idea.bitbyte.constants.TestActionType;
+import com.zzk.idea.bitbyte.util.TestFrameworkUtil;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class BaseRightMenuCreateTestClassAction extends AnAction {
@@ -33,15 +33,13 @@ public abstract class BaseRightMenuCreateTestClassAction extends AnAction {
             return;
         }
         PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
-        PsiClass containingMethod = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        if (containingMethod == null) {
+        PsiClass containingClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
+        if (containingClass == null) {
             return;
         }
-        TestFramework.EXTENSION_NAME.extensions()
-                .filter(x -> "JUnit5".equalsIgnoreCase(x.getName()))
-                .findFirst()
+        TestFrameworkUtil.getJunit5TestFramework(containingClass)
                 .ifPresent(framework -> {
-                    new CreateTestClassAction(containingMethod, framework, testActionType).doAction(event);
+                    new CreateTestClassAction(containingClass, framework, testActionType).doAction(event);
                 });
     }
 
